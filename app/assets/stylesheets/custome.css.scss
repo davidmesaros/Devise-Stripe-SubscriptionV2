@@ -1,4 +1,6 @@
-user-name {
+
+
+.user-name {
 
 padding: 0 !important ;
 
@@ -99,4 +101,121 @@ background-color: darken(#428bca,20%) !important;
 color: #fff;
 
 }
+
+.features {
+
+ul {
+
+margin-left: 0;
+
+padding-left: 15px;
+
+}
+
+}
+
+.jumbotron {
+
+text-align: center;
+
+background-image: asset-url('maxresdefault.jpg');
+
+background-size: cover;
+
+color: #fff;
+
+font-family: 'Roboto', sans-serif!important;
+font-weight: 300;
+
+font-stretch: expanded;
+
+padding-top: 25px;
+
+padding-bottom: 25px;
+
+margin-left: 15px;
+
+margin-right: 15px;
+
+// text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
+
+/*
+
+h2 {
+
+font-size: 35px !important;
+
+.lead {
+
+font-family: 'Helvetica Neue' !important;
+
+font-size: 30px !important;
+
+}
+
+} */
+
+}
+h2, h3, p{
+  font-family: 'Roboto', sans-serif!important;
+  font-weight: 400;
+  // font-size: 30px;
+  color:#565656;
+}
+
+
+
+
+
+.no-left-padding {
+
+padding-left: 0 !important;
+
+}
+
+.listing {
+
+list-style: none;
+
+padding-left: 0;
+
+}
+
+
+
+body > div.container > div > div.col-lg-12 > div._links > a:nth-child(1){
+  color: #428BCA;
+    background-color: #fff;
+}
+
+body > div.container > div > div.col-lg-12 > div._links > a:nth-child(3){
+  color: #428BCA;
+    background-color: #fff; 
+}
+
+body > div.container > div > div.col-lg-12 > div._links > a:nth-child(5){
+  color: #428BCA;
+    background-color: #fff;
+
+}
+
+.well {
+    margin-top: 1em;
+    padding-top: 3px;
+    padding-bottom: 25px;
+    padding-left: 19px;
+  }
+
+a.btn.btn-warning {
+    color: #fff;
+}
+
+body > div.container > div > div.col-lg-3 > div > a{
+  color: #428BCA;
+    background-color: #fff;
+
+}
+
+
+
 
