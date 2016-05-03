@@ -1,20 +1,23 @@
 <% if current_user %>
   <h3>Welcome: <%= current_user.email %></h3>
   <br>
-  <% if created_ad.advertising ==  true %>
-    <%= link_to "Your Ad is Ready 'Activate Now'", website_path(created_ad.id), class: "btn btn-primary" %>
-  <% elsif created_ad.advertising.nil? %>
+  <% if current_user.websites.present? %>
+    <% if created_ad.advertising ==  true %>
+
+      <%= link_to "Your Ad is Ready 'Activate Now'", website_path(created_ad.id), class: "btn btn-primary" %>
+    <% end %>
+  <% else %>
     <h5> With Only a few small Clicks we'll have you Advertsing on Google in no time </h5>
   
     <br>
     <%= link_to 'Lets Start with the Website', new_website_path, class: "btn btn-primary" %>
-    <% end %>
+  <% end %>
 
   <% current_user.websites.each do |website| %>
     <% if website.advertising == false %>
        <%= link_to "You have an Ad that's Getting Created", website_path(website), class: "btn btn-warning" %>
-      <% end %>
     <% end %>
+  <% end %>
   
 <% else %>
 <div class="jumbotron">

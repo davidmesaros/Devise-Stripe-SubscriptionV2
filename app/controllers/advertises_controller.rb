@@ -14,7 +14,10 @@ class AdvertisesController < ApplicationController
 
   # GET /advertises/new
   def new
-    @advertise = Advertise.new
+    @website = params[:website_id]
+    @advertise = Advertise.new(:website_id => @website)
+    
+
   end
 
   # GET /advertises/1/edit

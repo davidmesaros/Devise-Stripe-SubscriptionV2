@@ -16,9 +16,11 @@ class ApplicationController < ActionController::Base
   end
 
   def created_ad
-    current_user.websites.each do |website|
-        return website
-    end
+   
+      current_user.websites.each do |website|
+          return website
+      end
+  
   end
 
   

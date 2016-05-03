@@ -1,5 +1,5 @@
 class Website < ActiveRecord::Base
   belongs_to :user
-  has_many :advertises
-  has_one :subscriber
+  has_many :advertises , dependent: :destroy
+  has_one :subscriber , dependent: :destroy
 end
