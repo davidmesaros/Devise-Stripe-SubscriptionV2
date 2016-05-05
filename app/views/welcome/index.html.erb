@@ -16,7 +16,9 @@
 
               <% elsif created_ad.subscribed.present? %>
                   <%= link_to "Your DashBoard is Ready ", website_path(created_ad.id), class: "btn btn-warning" %>
-                    <%= link_to 'Have another Website to Advertise', new_website_path, class: "btn btn-primary" %>
+                  <br>
+                  <br>
+                    <%= link_to 'Have another Website Site', new_website_path, class: "btn btn-primary" %>
               <% else %>
                   <% current_user.websites.each do |website| %>
                     <% if website.advertising == false %>
