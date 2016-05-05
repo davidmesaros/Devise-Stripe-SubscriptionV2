@@ -44,25 +44,28 @@
     <%=f.error_span(:product2) %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :user_id, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :user_id, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:user_id) %>
-  </div>
+    <% if current_user.admin.present? %>
+        <div class="form-group">
+          <%= f.label :user_id, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :user_id, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:user_id) %>
+        </div>
 
-  <div class="form-group">
-    <%= f.label :advertising, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :advertising, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:advertising) %>
-  </div>
+        <div class="form-group">
+          <%= f.label :advertising, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :advertising, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:advertising) %>
+        </div>
+
+    <% end %>
   
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit "Create Details", :class => 'btn btn-primary' %>
+      <%= f.submit "Submit Details", :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 websites_path, :class => 'btn btn-default' %>
     </div>

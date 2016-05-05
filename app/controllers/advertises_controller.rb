@@ -1,15 +1,17 @@
 class AdvertisesController < ApplicationController
   before_action :set_advertise, only: [:show, :edit, :update, :destroy]
-
+  before_action :require_admin
   # GET /advertises
   # GET /advertises.json
   def index
     @advertises = Advertise.all
+    
   end
 
   # GET /advertises/1
   # GET /advertises/1.json
   def show
+    
   end
 
   # GET /advertises/new
@@ -73,5 +75,12 @@ class AdvertisesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def advertise_params
       params.require(:advertise).permit(:description, :website_id)
+    end
+
+    def require_admin
+      if logged_in? && !current_user.admin.present?
+      flash[:danger] = "Only Admin's have Access"
+      redirect_to root_path
+      end      
     end
 end

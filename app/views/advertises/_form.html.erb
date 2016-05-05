@@ -46,12 +46,12 @@
     <tr>
         <th>Website Name</th>
         <th>Website ID</th>
-        <th>Website Ad</th>
+        <th>Website Ad Created</th>
 
     </tr>
   </thead>
   <tbody>
-    <% current_website.each do |website| %>
+    <% current_websites.each do |website| %>
     <tr>
       <% if website.advertising == false %>
         <td><%= website.name %></td>

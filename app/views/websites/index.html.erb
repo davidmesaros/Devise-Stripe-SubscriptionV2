@@ -8,45 +8,96 @@
       <tr>
         <th><%= model_class.human_attribute_name(:id) %></th>
         <th><%= model_class.human_attribute_name(:name) %></th>
-        <th> Add ready on Google </th>
+        <th> Ad ready on Google </th>
         <th><%= model_class.human_attribute_name(:product) %></th>
         <th><%= model_class.human_attribute_name(:product1) %></th>
         <th><%= model_class.human_attribute_name(:product2) %></th>
-        <th><%= model_class.human_attribute_name(:user_id) %></th>
-        <th><%= model_class.human_attribute_name(:created_at) %></th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+                    
+        <% if current_user.admin.present? %>
+          <th><%= model_class.human_attribute_name(:user_id) %></th>
+          <th><%= model_class.human_attribute_name(:created_at) %></th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <% end %>
+
       </tr>
     </thead>
     <tbody>
       <% @websites.each do |website| %>
-      <% if current_user.id ==  website.user_id %>
-        <tr>
-          <td><%= link_to website.id, website_path(website) %></td>
-          <td><%= website.name %></td>
-          <td>
-          <% if website.advertising == false %>
-              <%= link_to "Your Google Ad is currently Pending" , website_path(website), :class => 'btn btn-primary' %>
-          <% else %>
-              <%= link_to "See How the Ad looks on Google",
-                  website_path(website),
-                  :class => 'btn btn-primary' %>
-          <% end %>
-          </td>
-          <td><%= website.product %></td>
-          <td><%= website.product1 %></td>
-          <td><%= website.product2 %></td>
-          <td><%= website.user_id %></td>
-          <td><%=l website.created_at %></td>
-          <td>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_website_path(website), :class => 'btn btn-default btn-xs' %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        website_path(website),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-xs btn-danger' %>
-          </td>
-        </tr>
+      
+        <% if current_user.id == website.user_id and current_user.admin == false %>
+          <tr>
+            <td><%= link_to website.id, website_path(website) %></td>
+            <td><%= website.name %></td>
+            <td>
+            <% if website.advertising == false %>
+                <%= link_to "Your Google Ad is Pending" , website_path(website), :class => 'btn btn-warning' %>
+            <% elsif website.subscribed == true %>
+               <%= link_to "Go to Dashboard",
+                    website_path(website),
+                    :class => 'btn btn-warning' %>
+            <% else %>
+                <%= link_to "See How the Ad looks on Google",
+                    website_path(website),
+                    :class => 'btn btn-primary' %>
+
+            <% end %>
+            </td>
+            <td><%= website.product %></td>
+            <td><%= website.product1 %></td>
+            <td><%= website.product2 %></td>
+             
+            <% if current_user.admin.present? %>
+              <td><%= website.user_id %></td>
+              <td><%=l website.created_at %></td>
+            <% end %>
+            
+            <td>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_website_path(website), :class => 'btn btn-default btn-xs' %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          website_path(website),
+                          :method => :delete,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :class => 'btn btn-xs btn-danger' %>
+            </td>
+          </tr>
+        <!-- /////////Admin section///////////////////////// -->
+        <% elsif current_user.admin == true %>
+            <tr>
+            <td><%= link_to website.id, website_path(website) %></td>
+            <td><%= website.name %></td>
+            <td>
+            <% if website.advertising == false %>
+                <%= link_to "Your Google Ad is Pending" , website_path(website), :class => 'btn btn-warning' %>
+              <% elsif website.subscribed == true %>
+               <%= link_to "Go to Dashboard",
+                    website_path(website),
+                    :class => 'btn btn-warning' %>
+            <% else %>
+                <%= link_to "See How the Ad looks on Google",
+                    website_path(website),
+                    :class => 'btn btn-primary' %>
+
+            <% end %>
+            </td>
+            <td><%= website.product %></td>
+            <td><%= website.product1 %></td>
+            <td><%= website.product2 %></td>
+             
+            <% if current_user.admin.present? %>
+              <td><%= website.user_id %></td>
+              <td><%=l website.created_at %></td>
+            <% end %>
+            
+            <td>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_website_path(website), :class => 'btn btn-default btn-xs' %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          website_path(website),
+                          :method => :delete,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :class => 'btn btn-xs btn-danger' %>
+            </td>
         <%end %>
       <% end %>
     </tbody>
@@ -57,25 +108,50 @@
             new_website_path,
             :class => 'btn btn-primary' %>
 
+<%= link_to "Advertise List",
+            advertises_path,
+            :class => 'btn btn-warning' if current_user.admin.present? %> 
+
+<%= link_to "Home",
+            root_path,
+            :class => 'btn btn-warning' if current_user.admin.present? %>            
+
 
 <br>
 : Please note: for every new website activate for Google Ads, the fee is $300 + 25% each
 <p>
   <br>
-<% count = [] %>
-<% current_user.websites.each do |website | %>
-<% count.push(website) %>
   <% content_for :footer do %>
-    <% if website.advertising == true %>
-    <%= count.length %> Your Ad for ""<%= website.name %>"" is Ready to be 
-    Activated <%= link_to "Activate NOW" , website_path(website), class: "link" %>
-    <% else %>
-    <br>
-    ------------------------------
-    <br>
-    <%= count.length %> Within the next 24hrs your Webpage Ad <br> ""<%= website.name %>""<br> will be ready to activate.
-    <% end %>
+    <% if current_user.admin.blank? %>
+        <% count = [] %>
+        <% current_user.websites.each do |website | %>
+            <% count.push(website) %>
+
+                <% if website.advertising == true and website.subscribed == false %>
+                <%= count.length %> Your Ad for ""<%= website.name %>"" is Ready to be 
+                Activated <%= link_to "Activate NOW" , website_path(website), class: "link" %>
+                <% elsif website.subscribed.present? %>
+                    Go to Dashboard to see how your Ad is performing
+                <% else %>
+                <br>
+                ------------------------------
+                <br>
+                <%= count.length %> Within the next 24hrs your Webpage Ad <br> ""<%= website.name %>""<br> will be ready to activate.
+                <% end %>
+          <% end %>
   <% end %>
-  
+  <% if current_user.admin.present? %>
+      <% count_ads = [] %>
+      <% count_ads_not = [] %>
+      <% @websites.each do|website| %>
+          <% count_ads.push(website) if website.advertising == true %>
+          <% count_ads_not.push(website) if website.advertising == false %>
+      <% end %> 
+      <%= count_ads.length.to_s + " Ads Created "  %>
+      <br/>
+      <p>--------------------------------------------</p>
+      <%= count_ads_not.length.to_s + " Ads Pending "  %>
+  <% end %>
 <% end %>
 <p>
+ 

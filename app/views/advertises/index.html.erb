@@ -40,28 +40,62 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_advertise_path,
-            :class => 'btn btn-primary' %>
-<%= link_to "User List", websites_path, :class => 'btn btn-primary' %> 
+
+<%= link_to "Website List", 
+            websites_path, 
+            :class => 'btn btn-primary' %> 
+
+<%= link_to "Home",
+            root_path,
+            :class => 'btn btn-warning' if current_user.admin.present? %>  
 
 <table class="table table-striped" >
   <thead>
     <tr>
         <th>Website Name</th>
         <th>Website ID</th>
-        <th>Website AD Pending</th>
+        <th>Ad's Activated</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
 
     </tr>
   </thead>
   <tbody>
-    <% current_website.each do |website| %>
+  <!-- current_websites => Website.all -->
+  <% current_websites.each do |website| %>
     <tr>
       <% if website.advertising == false %>
         <td><%= website.name %></td>
         <td><%= website.id %></td>
         <td><%= website.advertising %></td>
-    </tr>
+        
+        <td>
+          <!-- Here we dig deeper into advertises list 
+              ie find advertise been created but not activated  -->
+        <% website.advertises.each do |advertise| %> 
+        
+                    <%= link_to "Active Ad",
+                    edit_website_path(website),
+                    :class => 'btn btn-primary' if advertise.id.present?  %>
+        <% end %>
+
+          <%= link_to "Create Ad",
+                    new_advertise_path(:website_id => website.id),
+                    :class => 'btn btn-primary' if website.advertises.blank? %>
+        </td>
       <% end %>
-    <% end %>
+    </tr>
+  <% end %>
   </tbody>
+
+  <% content_for :footer do %>
+       <% count_ads = [] %>
+    <% count_ads_not = [] %>
+    <% current_websites.each do|website| %>
+        <% count_ads.push(website) if website.advertising == true %>
+        <% count_ads_not.push(website) if website.advertising == false %>
+    <% end %> 
+    <%= count_ads.length.to_s + " Ads Created "  %>
+    <br/>
+    <p>--------------------------------------------</p>
+    <%= count_ads_not.length.to_s + " Ads Pending "  %>
+  <% end %>

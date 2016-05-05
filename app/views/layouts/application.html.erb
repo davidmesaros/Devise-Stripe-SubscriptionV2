@@ -74,8 +74,10 @@
         </div>
         <div class="col-lg-3">
           <div class="well sidebar-nav">
+            <h3><%= "Hello Admin" if logged_in? and current_user.admin.present? %></h3>
             <h3>Swiftads : Notes</h3>
             <%= yield :footer %>
+            
            <!--  <ul class="nav nav-list">
               <li class="nav-header">Sidebar</li> -->
               <!-- <li><%= link_to "Link1", "/path1"  %></li>
