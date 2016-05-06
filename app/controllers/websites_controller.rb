@@ -28,6 +28,9 @@ class WebsitesController < ApplicationController
   def create
     @website = Website.new(website_params)
     @website.user = current_user
+    # Action Mailer Set up
+    SwiftadsMailer.swiftads_email(@website.user).deliver_now
+
     respond_to do |format|
       if @website.save
         format.html { redirect_to @website, notice: 'Website was successfully created.' }
