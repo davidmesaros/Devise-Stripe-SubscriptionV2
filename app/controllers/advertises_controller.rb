@@ -1,6 +1,6 @@
 class AdvertisesController < ApplicationController
   before_action :set_advertise, only: [:show, :edit, :update, :destroy]
-  before_action :require_admin
+  before_action :require_admin, except: [:show]
   # GET /advertises
   # GET /advertises.json
   def index

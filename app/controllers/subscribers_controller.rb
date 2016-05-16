@@ -18,7 +18,7 @@ class SubscribersController < ApplicationController
 
     current_user.subscribed = true
     
-    # I create my column here for website tabel
+    # I create my column here for website table
     @@website.subscribed = true
     @@website.save  
     current_user.stripeid = customer.id

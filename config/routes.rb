@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   
+  resources :data_dashboards
+  resources :dashboards
   devise_for :users, controllers: {registrations: 'registrations' }
   root 'welcome#index'
   resources :users

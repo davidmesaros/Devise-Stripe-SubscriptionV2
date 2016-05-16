@@ -29,7 +29,7 @@ class WebsitesController < ApplicationController
     @website = Website.new(website_params)
     @website.user = current_user
     # Action Mailer Set up
-    SwiftadsMailer.swiftads_email(@website.user).deliver_now
+    SwiftadsMailer.swiftads_email(@website.user, @website.name).deliver_now
 
     respond_to do |format|
       if @website.save

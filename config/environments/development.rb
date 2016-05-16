@@ -8,6 +8,8 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
+  
+
 
   config.action_mailer.delivery_method = :test
 

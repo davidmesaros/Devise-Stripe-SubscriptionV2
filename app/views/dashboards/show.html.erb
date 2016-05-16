@@ -1,0 +1,124 @@
+<%- model_class = Dashboard -%>
+<div class="page-header">
+  <h1>Dashboard - Daily </h1>
+</div>
+
+<table class="table table-striped">
+          <thead>
+            <tr>
+              <th><%= model_class.human_attribute_name(:calls) %></th>
+              <th><%= model_class.human_attribute_name(:clicks) %></th>
+              <th><%= model_class.human_attribute_name(:searches) %></th>
+              <th><%= model_class.human_attribute_name(:cost) %></th>
+              <th><%= model_class.human_attribute_name(:budget) %></th>
+              <th><%= model_class.human_attribute_name(:smartphones) %></th>
+              <th><%= model_class.human_attribute_name(:tablets) %></th>
+              <th><%= model_class.human_attribute_name(:computers) %></th>
+              <th> Web Name</th>
+              <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
+              <th> Last Updated at </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                
+                <td><%= @dashboard.calls %></td>
+                <td><%= @dashboard.clicks %></td>
+                <td><%= @dashboard.searches %></td>
+                <td><%= @dashboard.cost %></td>
+                <td><%= @dashboard.budget %></td>
+                <td><%= @dashboard.smartphones %></td>
+                <td><%= @dashboard.tablets %></td>
+                <td><%= @dashboard.computers %></td>
+    
+                <% website_name = Website.find_by(:id => @dashboard.website_id) %> 
+                <% website_name.name %>
+                <td><%= website_name.name %> </td>
+               <!--  <td><%= @dashboard.created_at.to_s(:due_date) %></td> -->
+                
+                <td><%= @dashboard.updated_at.to_s(:due_date) %></td>
+              </tr>
+            </tbody>
+    </table>
+
+<%= link_to 'Update Dashboards',
+              dashboards_path, :class => 'btn btn-default'  if current_user.admin.present? %>
+<%= link_to "Home", root_path, :class => 'btn btn-default'  %>
+<%= link_to "Your Google Ad", advertise_path(dashboard_advertise), :class => 'btn btn-default'  %>
+<%= link_to 'Website Site', websites_path, class: "btn btn-primary" %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_dashboard_path(@dashboard), :class => 'btn btn-warning' if current_user.admin.present? %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              dashboard_path(@dashboard),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' if current_user.admin.present? %>
+
+
+              <!--              DashBoard Donunt Chart / Customers                            -->
+
+    <%- model_class = Dashboard -%>
+    <div class="page-header">
+         <!--  <h1>Chart</h1> -->
+        </div>
+  
+    <canvas id = 'mycanvas' width="100" height="100"></canvas>
+
+      <script type="text/javascript">
+        
+        $(document).ready(function(){});
+
+        $.getScript('http://www.chartjs.org/assets/Chart.js',function(){
+        var ctx = $("#mycanvas").get(0).getContext('2d');
+
+        var data = [
+          {
+            value: "<%= @dashboard.searches %>",
+            color: "cornflowerblue",
+            highlight: "lightskyblue",
+            label: "JavaScript"
+          },
+          {
+            value: 50,
+            color: "lightgreen",
+            highlight: "yellowgreen",
+            label: "HTML"
+          },
+          {
+            value: 40,
+            color: "orange",
+            highlight: "darkorange",
+            label: "CSS"
+          }
+        ];
+
+
+        var chart = new Chart(ctx).Doughnut(data);
+        console.log(data[0].value)
+
+      });
+      </script>
+  
+      <h1 class="Count odometer"><%= @dashboard.searches.to_i %></h1>
+      <script type="text/javascript">
+        
+        $('.Count').each(function () 
+        {
+
+            $(this).prop('Counter',-1).animate({
+               Counter: $(this).text()  
+              }, 
+              {
+                duration: 5000,
+                easing: 'swing',
+                step: function (now) 
+                  {
+                    $(this).text(Math.ceil(now));
+                  }
+              });
+      });
+
+      </script>
+
+
+      

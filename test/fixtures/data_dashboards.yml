@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  calls: 1
+  clicks: 1
+  searches: 1
+  cost: 1
+  budget: 1
+  smartphones: 1
+  tablets: 1
+  computers: 1
+  dashboard_id: 
+
+two:
+  calls: 1
+  clicks: 1
+  searches: 1
+  cost: 1
+  budget: 1
+  smartphones: 1
+  tablets: 1
+  computers: 1
+  dashboard_id: 

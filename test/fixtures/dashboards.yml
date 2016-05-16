@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  calls: 1
+  clicks: 1
+  searches: 1
+  cost: 1
+  budget: 1
+  devise: MyString
+  website_id: 
+
+two:
+  calls: 1
+  clicks: 1
+  searches: 1
+  cost: 1
+  budget: 1
+  devise: MyString
+  website_id: 

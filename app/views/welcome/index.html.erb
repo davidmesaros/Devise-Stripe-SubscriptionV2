@@ -9,13 +9,16 @@
     <% else %>
         <br>
         <% if current_user.websites.present? %>
-            
-              <% if created_ad.advertising ==  true  && !created_ad.subscribed.nil? && !created_ad.subscribed.present? %>
+              
+              <% if created_ad.advertising ==  true  && !created_ad.subscribed.present? %> <!--&& !created_ad.subscribed.nil? -->
                  <%= link_to "Your Ad is Ready 'Activate Now'", website_path(created_ad.id), class: "btn btn-primary" %>
                 
 
               <% elsif created_ad.subscribed.present? %>
-                  <%= link_to "Your DashBoard is Ready ", website_path(created_ad.id), class: "btn btn-warning" %>
+                  
+                  <%= link_to "Your DashBoard is Ready ", 
+                            dashboard_path(dashboard_params),
+                            :class => 'btn btn-warning' %>
                   <br>
                   <br>
                     <%= link_to 'Have another Website Site', new_website_path, class: "btn btn-primary" %>

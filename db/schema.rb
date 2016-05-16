@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503235112) do
+ActiveRecord::Schema.define(version: 20160516010304) do
 
   create_table "advertises", force: :cascade do |t|
     t.text     "description"
@@ -21,6 +21,38 @@ ActiveRecord::Schema.define(version: 20160503235112) do
   end
 
   add_index "advertises", ["website_id"], name: "index_advertises_on_website_id"
+
+  create_table "dashboards", force: :cascade do |t|
+    t.integer  "calls"
+    t.integer  "clicks"
+    t.integer  "searches"
+    t.integer  "cost"
+    t.integer  "budget"
+    t.integer  "website_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "smartphones"
+    t.integer  "tablets"
+    t.integer  "computers"
+  end
+
+  add_index "dashboards", ["website_id"], name: "index_dashboards_on_website_id"
+
+  create_table "data_dashboards", force: :cascade do |t|
+    t.integer  "calls"
+    t.integer  "clicks"
+    t.integer  "searches"
+    t.integer  "cost"
+    t.integer  "budget"
+    t.integer  "smartphones"
+    t.integer  "tablets"
+    t.integer  "computers"
+    t.integer  "dashboard_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "data_dashboards", ["dashboard_id"], name: "index_data_dashboards_on_dashboard_id"
 
   create_table "subscribers", force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -1,0 +1,35 @@
+<%- model_class = DataDashboard -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:calls) %>:</strong></dt>
+  <dd><%= @data_dashboard.calls %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:clicks) %>:</strong></dt>
+  <dd><%= @data_dashboard.clicks %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:searches) %>:</strong></dt>
+  <dd><%= @data_dashboard.searches %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:cost) %>:</strong></dt>
+  <dd><%= @data_dashboard.cost %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:budget) %>:</strong></dt>
+  <dd><%= @data_dashboard.budget %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:smartphones) %>:</strong></dt>
+  <dd><%= @data_dashboard.smartphones %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tablets) %>:</strong></dt>
+  <dd><%= @data_dashboard.tablets %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:computers) %>:</strong></dt>
+  <dd><%= @data_dashboard.computers %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:dashboard_id) %>:</strong></dt>
+  <dd><%= @data_dashboard.dashboard_id %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              data_dashboards_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_data_dashboard_path(@data_dashboard), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              data_dashboard_path(@data_dashboard),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
