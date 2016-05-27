@@ -2,6 +2,12 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<div align="center">
+
+   <%= will_paginate %>
+
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -12,6 +18,7 @@
       <th><%= model_class.human_attribute_name(:unconfirmed_email) %></th>
       <th><%= model_class.human_attribute_name(:subscribed) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:admin) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -24,7 +31,8 @@
         <td><%= user.confirmed_at %></td>
         <td><%= user.unconfirmed_email %></td>
         <td><%= user.subscribed %></td>
-        <td><%=l user.created_at %></td>
+        <td><%= user.created_at %></td>
+        <td><%= user.admin %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_user_path(user), :class => 'btn btn-default btn-xs' %>
@@ -46,3 +54,9 @@
 <%= link_to "Home",
             root_path,
             :class => 'btn btn-primary' %>
+
+<div align="center">
+
+  <%= will_paginate %>
+
+</div>

@@ -4,8 +4,8 @@ class AdvertisesController < ApplicationController
   # GET /advertises
   # GET /advertises.json
   def index
-    @advertises = Advertise.all
-    
+    # @advertises = Advertise.all
+    @advertises = Advertise.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /advertises/1

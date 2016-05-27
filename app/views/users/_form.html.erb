@@ -107,6 +107,13 @@
     <%=f.error_span(:unconfirmed_email) %>
   </div>
   <div class="form-group">
+    <%= f.label :admin, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :admin, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:subscribed) %>
+  </div>
+  <div class="form-group">
     <%= f.label :subscribed, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :subscribed, :class => 'form-control' %>

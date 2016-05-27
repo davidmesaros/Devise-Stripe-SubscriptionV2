@@ -3,7 +3,11 @@
         <div class="page-header">
           <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
         </div>
-        
+        <div align="center">
+
+          <%= will_paginate %>
+
+        </div>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -30,9 +34,9 @@
                 <td><%= dashboard.searches %></td>
                 <td><%= dashboard.cost %></td>
                 <td><%= dashboard.budget %></td>
-                <td><%= dashboard.smartphones %></td>
-                <td><%= dashboard.tablets %></td>
-                <td><%= dashboard.computers %></td>
+                <td><%= dashboard.smartphones %>%</td>
+                <td><%= dashboard.tablets %>%</td>
+                <td><%= dashboard.computers %>%</td>
     
                 <% website_name = Website.find_by(:id => dashboard.website_id) %> 
                 <% website_name.name %>
@@ -64,8 +68,13 @@
 
         <%= link_to 'Data Dashboard Results',
                   data_dashboards_path, :class => 'btn btn-default'  %>
+        <div align="center">
+
+          <%= will_paginate %>
+
+        </div>
 <% else %>
-      <!--       Current User Monthly Dashboard                        -->
+      <!--     /////////  Current User Monthly Dashboard  /////////////////                      -->
          <%- model_class = Dashboard -%>
             <div class="page-header">
               <h1>Dashboard - Monthly </h1>
@@ -135,8 +144,7 @@
                             dashboard_path(dashboard), :class => 'btn btn-default'  %>
                 <%= link_to "Home", root_path, :class => 'btn btn-default'  %>
                 <%= link_to 'Website Site', websites_path, class: "btn btn-primary" %>
-                <%= link_to 'Monthly Results',
-                            dashboard_path(dashboard), :class => 'btn btn-default'  %>
-            <% end %>
-          <% end %>
+            <% end %>   
+           <% end %>
+          <%= link_to "Home", root_path, :class => 'btn btn-default' %> <!-- Might need to fix this grrr -->
 <% end %>

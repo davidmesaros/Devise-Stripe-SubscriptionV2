@@ -25,11 +25,11 @@
                 <td><%= @dashboard.calls %></td>
                 <td><%= @dashboard.clicks %></td>
                 <td><%= @dashboard.searches %></td>
-                <td><%= @dashboard.cost %></td>
-                <td><%= @dashboard.budget %></td>
-                <td><%= @dashboard.smartphones %></td>
-                <td><%= @dashboard.tablets %></td>
-                <td><%= @dashboard.computers %></td>
+                <td>$<%= @dashboard.cost %></td>
+                <td>$<%= @dashboard.budget %></td>
+                <td><%= @dashboard.smartphones %>%</td>
+                <td><%= @dashboard.tablets %>%</td>
+                <td><%= @dashboard.computers %>%</td>
     
                 <% website_name = Website.find_by(:id => @dashboard.website_id) %> 
                 <% website_name.name %>
@@ -40,30 +40,54 @@
               </tr>
             </tbody>
     </table>
-
-<%= link_to 'Update Dashboards',
+<%= link_to 'Dashboards',
               dashboards_path, :class => 'btn btn-default'  if current_user.admin.present? %>
+
+
+<%= link_to 'Monthly Results',
+              data_dashboards_path, :class => 'btn btn-default'  if current_user.admin.blank? %>
+             
 <%= link_to "Home", root_path, :class => 'btn btn-default'  %>
 <%= link_to "Your Google Ad", advertise_path(dashboard_advertise), :class => 'btn btn-default'  %>
-<%= link_to 'Website Site', websites_path, class: "btn btn-primary" %>
+<%= link_to 'Website Details', websites_path, class: "btn btn-primary" %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_dashboard_path(@dashboard), :class => 'btn btn-warning' if current_user.admin.present? %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              dashboard_path(@dashboard),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' if current_user.admin.present? %>
 
 
-              <!--              DashBoard Donunt Chart / Customers                            -->
+ <!--///////////////              DashBoard Donunt Chart / Customers                      ////////////////      -->
 
     <%- model_class = Dashboard -%>
     <div class="page-header">
-         <!--  <h1>Chart</h1> -->
-        </div>
-  
-    <canvas id = 'mycanvas' width="100" height="100"></canvas>
+         <!--  <h1>Line Break</h1> -->
+    </div>
 
+  
+    <div class="chart" id='chart1'>
+      <div class="inline" id='calls'></div>
+      <div class="inline" id="green"></div>
+      <div class="inline" id='clicks'></div>
+      <div class="inline" id="orange"></div>
+      <div class="inline" id='searches'></div>
+      <div class="inline" id="blue"></div>
+      
+      <br class="clearBoth" />
+      <p>Searches - People that have viewed your Ad when searching for your Keyword/Product </p>
+        <canvas id = 'mycanvas' width="200" height="200"></canvas>
+    </div>
+      <br class="clearBoth" />
+    <!--           Chart two                    -->
+    <div class="chart" id='chart2'>
+      <div class="inline" id='smartphones'></div>
+      <div class="inline" id="lightblue"></div>
+      <div class="inline" id='tablets'></div>
+      <div class="inline" id="red"></div>
+      <div class="inline" id='computers'></div>
+      <div class="inline" id="limegreen"></div>
+
+      <br class="clearBoth" />
+      <p> Show the Devise people are using to search for your product  </p>
+        <canvas id = 'mycanvas2' width="200" height="200"></canvas>
+    </div>
       <script type="text/javascript">
         
         $(document).ready(function(){});
@@ -76,30 +100,92 @@
             value: "<%= @dashboard.searches %>",
             color: "cornflowerblue",
             highlight: "lightskyblue",
-            label: "JavaScript"
+            label: "Searches"
           },
+        
           {
-            value: 50,
-            color: "lightgreen",
-            highlight: "yellowgreen",
-            label: "HTML"
-          },
-          {
-            value: 40,
+            value: "<%= @dashboard.clicks %>",
             color: "orange",
             highlight: "darkorange",
-            label: "CSS"
-          }
+            label: "Clicks"
+          },
+
+          {
+            value: "<%= @dashboard.calls %>",
+            color: "lightgreen",
+            highlight: "yellowgreen",
+            label: "Calls"
+          },
         ];
 
 
         var chart = new Chart(ctx).Doughnut(data);
-        console.log(data[0].value)
+        var div = document.getElementById('searches');
+        var color = document.getElementById('blue');
+        div.innerHTML = data[0].label
+        color.style.background = "rgb(100,149,237)";
+
+        var div0 = document.getElementById('clicks');
+        var color0 = document.getElementById('orange');
+        div0.innerHTML = data[1].label
+        color0.style.background = "rgb(255,165,0)";
+
+        var div1 = document.getElementById('calls');
+        var color1 = document.getElementById('green');
+        div1.innerHTML = data[2].label
+        color1.style.background = "rgb(144, 238, 144)";
+        console.log(data[0].label)
+        console.log(data[0].color)
+
+        // Chert 2 ---------------------------------------------->
+         var ctx1 = $("#mycanvas2").get(0).getContext('2d')
+         var data_chart2 = [
+          {
+            value: "<%= @dashboard.smartphones %>",
+            color: "#63ff90",
+            highlight: "lime",
+            label: "Smartphones"
+          },
+          {
+            value: "<%= @dashboard.tablets %>",
+            color: "#ff6384",
+            highlight: "#ff4a70",
+            label: "Tablets"
+          },
+
+          {
+            value: "<%= @dashboard.computers %>",
+            color: "#63d2ff",
+            highlight: "#6384ff",
+            label: "Computers"
+          }
+
+        ];
+
+        var chart = new Chart(ctx1).Doughnut(data_chart2);
+        var div_chart1 = document.getElementById('smartphones');
+        var color_chart1 = document.getElementById('lightblue');
+        div_chart1.innerHTML = data_chart2[0].label
+        color_chart1.style.background = "#63ff90";
+
+        var div_chart2 = document.getElementById('tablets');
+        var color_chart2 = document.getElementById('red');
+        div_chart2.innerHTML = data_chart2[1].label
+        color_chart2.style.background = "#ff6384";
+
+        var div_chart3 = document.getElementById('computers');
+        var color_chart3 = document.getElementById('limegreen');
+        div_chart3.innerHTML = data_chart2[2].label
+        color_chart3.style.background = "#63d2ff";
+        
+
 
       });
       </script>
   
-      <h1 class="Count odometer"><%= @dashboard.searches.to_i %></h1>
+      <h1 class="Count odometer"><%= @dashboard.clicks.to_i %></h1>
+      <p>Daily Clicks  - People that have clicked on to your Ad and went to your website  </p>
+
       <script type="text/javascript">
         
         $('.Count').each(function () 

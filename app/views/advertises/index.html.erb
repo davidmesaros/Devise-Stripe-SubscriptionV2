@@ -2,6 +2,12 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+
+<div align="center">
+
+  <%= will_paginate %>
+
+</div>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -39,7 +45,11 @@
     <% end %>
   </tbody>
 </table>
+<div align="center">
 
+  <%= will_paginate %>
+
+</div>
 
 <%= link_to "Website List", 
             websites_path, 
@@ -48,6 +58,7 @@
 <%= link_to "Home",
             root_path,
             :class => 'btn btn-warning' if current_user.admin.present? %>  
+
 
 <table class="table table-striped" >
   <thead>

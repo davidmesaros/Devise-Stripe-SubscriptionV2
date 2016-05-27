@@ -5,6 +5,7 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+
   <dd><%= @user.email %></dd>
   <dt><strong><%= model_class.human_attribute_name(:encrypted_password) %>:</strong></dt>
   <dd><%= @user.encrypted_password %></dd>
@@ -30,6 +31,8 @@
   <dd><%= @user.confirmation_sent_at %></dd>
   <dt><strong><%= model_class.human_attribute_name(:unconfirmed_email) %>:</strong></dt>
   <dd><%= @user.unconfirmed_email %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:admin) %>:</strong></dt>
+  <dd><%= @user.admin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:subscribed) %>:</strong></dt>
   <dd><%= @user.subscribed %></dd>
   <dt><strong><%= model_class.human_attribute_name(:stripeid) %>:</strong></dt>

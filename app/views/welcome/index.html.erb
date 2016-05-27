@@ -12,16 +12,26 @@
               
               <% if created_ad.advertising ==  true  && !created_ad.subscribed.present? %> <!--&& !created_ad.subscribed.nil? -->
                  <%= link_to "Your Ad is Ready 'Activate Now'", website_path(created_ad.id), class: "btn btn-primary" %>
-                
-
               <% elsif created_ad.subscribed.present? %>
+                    <!-- Dashboard to update in 24 hrs       -->
+                    <%= link_to "Your Dashboard will be ready in the next 24 hours ", 
+                              websites_path,
+                              :class => 'btn btn-warning' if dashboard_params.blank?%>
+                    <!-- For  when with Dashbaord is Ready -->
+                    <%= link_to "Your Dashboard is Ready ", 
+                              dashboard_path(dashboard_params),
+                              :class => 'btn btn-warning' if dashboard_params.present? %> 
                   
-                  <%= link_to "Your DashBoard is Ready ", 
-                            dashboard_path(dashboard_params),
-                            :class => 'btn btn-warning' %>
                   <br>
                   <br>
-                    <%= link_to 'Have another Website Site', new_website_path, class: "btn btn-primary" %>
+                    <%= link_to 'Add Another Website Site', new_website_path, class: "btn btn-primary" %>
+                  <br>
+                  <br>
+                  <% current_user.websites.each do |website| %>
+                    <% if website.advertising == false %>
+                      <%= link_to "You have an Ad that's Getting Created", websites_path, class: "btn btn-info" %>
+                      <% end %>
+                    <% end %>
               <% else %>
                   <% current_user.websites.each do |website| %>
                     <% if website.advertising == false %>
@@ -39,7 +49,7 @@
     <% end %> 
 
   
-  
+<!--            //////////   User Sign-Up  ///////////                             -->  
 <% else %>
 <div class="jumbotron">
   <h2>Welcome to Swiftads!</h2>
@@ -53,10 +63,10 @@
         <h2>Swiftads Package</h2>
         <div class="features">
           <ul>
-            <li> Swiftads create the an Ad based on Google's Keywords </li>
-            <li>Your Ad will be on Top Position on Google Search</li>
-            <li>Swiftads works smartly with Google to optimise your ad and get the results with miniumal spending</li>
-            <li>Only Get Charge when someone clicks onto your Ad</li>
+            <li>Swiftads will create an Ad based on Google's Keywords and Website </li>
+            <li>Your Ad will be displayed Top Position when some searching your products/ keywords</li>
+            <li>Swiftads works smartly with Google to optimise your ad and get the best results with miniumal spending</li>
+            <li>You Only Get Charge when someone clicks onto your Ad</li>
             <li>Price: Max amount is $300 / month that goes directly to Google </br>
             + swiftads fee: 25% (ie total amount $375/month) </li>
           </ul>

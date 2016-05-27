@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   helper_method :current_websites, :created_ad, :logged_in?, :dashboard_params, 
-                :dashboard_advertise, :dashboard_data
+                :dashboard_advertise, :dashboard_data, :dashboard_data_finder
+
+            
           
   # around_filter :set_time_zone
   
@@ -45,18 +47,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def dashboard_advertise
+  def dashboard_advertise # google Ad link ( using erb not contoller.)
     @dashboard.website.advertises.each do |advertise|
           return advertise
       end
   end
 
-  def dashboard_data
+  def dashboard_data # this methiod is called at Update  => dashbaord contoller
+
     @@dashboard = @dashboard
     dashboard_data_params
   end
 
   def dashboard_data_params # this created Data_Dashboard
+
     @@dashboard
     data_dashboard = DataDashboard.new(:calls => @@dashboard.calls, 
                                           :clicks => @@dashboard.clicks, 
@@ -68,7 +72,7 @@ class ApplicationController < ActionController::Base
                                           :computers => @@dashboard.computers, 
                                           :dashboard_id => @@dashboard.id )
     data_dashboard.save
-   
+    
   end
 
   def total_dashboards
@@ -80,26 +84,44 @@ class ApplicationController < ActionController::Base
     @data_smarthphones = []
     @data_tablets = []
     @data_computers = []
+    # @data_dashboards = DataDashboard.where(dashboard_id:18)
+
     @data_dashboards.each do |data|
-        data_id = data.dashboard_id #<!-- find data_dashbord id -->
-        dashboard_obj = Dashboard.find_by(id: data_id) #<!-- find the Dashboard id or website Name -->
-        web_id = dashboard_obj.website_id # <!-- get the website ID -->
-        @user = Website.find_by(id:web_id) # <!-- Get the website Name/web address -->
-        unless current_user.admin.blank?
-          if data.dashboard_id == dashboard_obj.id && current_user.id == web_id
-        end
-          @data_calls << data.calls
-          @data_clicks << data.clicks
-          @data_searches << data.searches
-          @data_cost << data.cost
-          @data_budget << data.budget
-          @data_smarthphones << data.smartphones
-          @data_tablets << data.tablets
-          @data_computers << data.computers
-          end
-           
+      
+      
+      
+      if current_user.admin.blank?
+          data_id = data.dashboard_id #<!-- find data_dashbord id -->
+          dashboard_obj = Dashboard.find_by(id: data_id) #<!-- find the Dashboard id or website Name -->
         
+          web_id = dashboard_obj.website_id # <!-- get the website ID -->
+          
+          @user = Website.find_by(id:web_id) # <!-- Get the website Name/web address -->
+      
+          if data.dashboard_id == dashboard_obj.id && current_user.id == @user.user_id
+            
+            @data_calls << data.calls
+            @data_clicks << data.clicks
+            @data_searches << data.searches
+            @data_cost << data.cost
+            @data_budget << data.budget
+            @data_smarthphones << data.smartphones
+            @data_tablets << data.tablets
+            @data_computers << data.computers
+          end
+      else  
+            @data_calls << data.calls
+            @data_clicks << data.clicks
+            @data_searches << data.searches
+            @data_cost << data.cost
+            @data_budget << data.budget
+            @data_smarthphones << data.smartphones
+            @data_tablets << data.tablets
+            @data_computers << data.computers
       end
+    end 
+        
+    
     @calls = 0
     @data_calls.each { |a| @calls+=a }
     @calls
@@ -132,6 +154,40 @@ class ApplicationController < ActionController::Base
     @data_computers.each { |a| @computers +=a }
     @computers
 
+    
+    adverage(@smartphones, @tablets, @computers)
+
+
+  end
+
+  def dashboard_data_finder
+        @data_dashboards.each do |data_dashboard| 
+                data_id = data_dashboard.dashboard_id #%> <!-- find data_dashbord id -->
+                dashboard_obj = Dashboard.find_by(id: data_id) #%><!-- find the Dashboard id or website Name -->
+                web_id = dashboard_obj.website_id # %> <!-- get the website ID -->
+                user = Website.find_by(id:web_id) # %> <!-- Get the website Name/web address -->
+                if data_dashboard.dashboard_id == dashboard_obj.id && current_user.id == user.user_id
+                  @dashboard_obj =  dashboard_obj
+                  @web_id = web_id
+                  @user = user
+                end
+
+        end
+  end
+  # data_dashboard- Index
+  def adverage(smartphones, tablets, computers) 
+    @average = []
+    total = smartphones + tablets + computers 
+    hash = {:smartphones => smartphones,:tablets => tablets, :computers => computers}
+    hash.each do | key, value |
+                  value  = value /total.to_f  
+                  
+                   value_floated = value * 100 
+                   @average << value_floated.round(0)
+
+                    
+      end
+           
   end
 
 

@@ -237,4 +237,38 @@ a.btn.btn-info {
             width: 150px;
           }
 
+#blue, #orange, #green, #lightblue, #red, #limegreen{
+    margin-top: 5px;
+    width: 60px;
+    height: 10px;
+    margin: 6px;
+}
+
+.inline, .chart{
+  float: left;
+}
+.clearBoth{
+  clear:both;
+}
+
+canvas#mycanvas, canvas#mycanvas2 {
+    margin: 1em;
+    margin-left: 5em;
+}
+
+div#chart1, div#chart2{
+    width: 50%;
+}
+
+div#chart2 {
+    margin-left: 51em;
+    margin-top: -21em;
+}
+
+h1.Count.odometer {
+   
+    margin-left: 80px;
+
+}
+
 

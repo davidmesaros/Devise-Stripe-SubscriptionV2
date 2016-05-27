@@ -4,7 +4,9 @@ class WebsitesController < ApplicationController
   # GET /websites
   # GET /websites.json
   def index
-    @websites = Website.all
+    
+    @websites = Website.all 
+    
   end
 
   # GET /websites/1
@@ -54,6 +56,7 @@ class WebsitesController < ApplicationController
         format.json { render json: @website.errors, status: :unprocessable_entity }
       end
     end
+    SwiftadsMailer.swiftads_email_update(@website.user, @website.name, @website.product, @website.product1, @website.product2).deliver_now # this get email out when the cleint may have update there website details
   end
 
   # DELETE /websites/1

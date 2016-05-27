@@ -1,17 +1,19 @@
 class DashboardsController < ApplicationController
   before_action :set_dashboard, only: [:edit, :update, :destroy]
-
+  before_action :require_user_same, only: [:edit, :update, :destroy]
+  before_action :require_same_dashbaord_id, only: [:show]
   # GET /dashboards
   # GET /dashboards.json
   def index
-    @dashboards = Dashboard.all
-    
+    # @dashboards = Dashboard.all
+    @dashboards = Dashboard.paginate(page: params[:page], per_page: 5)
+
     # From Website index to DashBoard
     # instance to index to valid? a new link 
     # @website_new = params[:website]
     # this needs to be the last line as it is double instance to carry below to next method
     # @@website = params[:website]
-
+    
 
   end
 
@@ -33,6 +35,7 @@ class DashboardsController < ApplicationController
   # GET /dashboards/1/edit
   def edit
 
+
   end
 
   # POST /dashboards
@@ -48,21 +51,26 @@ class DashboardsController < ApplicationController
         format.html { render :new }
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
+
+      dashboard_data # this from the help controller -> DataDashboard.new => when Dashboard created
     end
   end
 
   # PATCH/PUT /dashboards/1
   # PATCH/PUT /dashboards/1.json
   def update
-    dashboard_data # the method  is called in application controller.rb
+
     respond_to do |format|
-      if @dashboard.update(dashboard_params)
+      if @dashboard.update(dashboard_params )
         format.html { redirect_to @dashboard, notice: 'Dashboard was successfully updated.' }
         format.json { render :show, status: :ok, location: @dashboard }
       else
         format.html { render :edit }
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
+
+      dashboard_data # this from the help controller -> DataDashboard.new => collected the update value and create a new Data
+     
     end
   end
 
@@ -86,4 +94,29 @@ class DashboardsController < ApplicationController
     def dashboard_params
       params.require(:dashboard).permit(:calls, :clicks, :searches, :cost, :budget, :smartphones, :tablets, :computers, :website_id)
     end
+
+    def require_user_same # extra security for users
+      if current_user != @user && !current_user.admin?
+        flash[:danger] = "This Page is not Accessible"
+        redirect_to root_path
+      end
+    end
+
+    def require_same_dashbaord_id # from the show in Dashboard Controller
+      dashbaords = Dashboard.all
+      dashbaords.each do |dashboard|
+      
+      dashboard_obj = Dashboard.find_by(id: dashboard.id) #%><!-- find the Dashboard id or website Name -->
+      web_id = dashboard_obj.website_id # %> <!-- get the website ID -->
+      user = Website.find_by(id:web_id) # %> <!-- Get the website Name/web address -->
+        
+        if current_user.id == user.user_id and params[:id].to_i != dashboard.id and !current_user.admin
+          flash[:danger] = "The Page you Attempted is not Accessible"
+          redirect_to root_path
+        end
+      
+      end
+    end
+
+
 end

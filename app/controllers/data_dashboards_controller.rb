@@ -5,8 +5,12 @@ class DataDashboardsController < ApplicationController
   # GET /data_dashboards.json
   def index
     @data_dashboards = DataDashboard.all
-    total_dashboards # the method is called in the application 
-    @data_dashboards = DataDashboard.search(params[:search])
+    total_dashboards # the method is called in the application => cal the total and average 
+    # @data_dashboards = DataDashboard.search(params[:search].paginate(page: params[:page], per_page: 5))
+    dashboard_data_finder## the method is called in the application 
+    # @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5)
+     
+    
   end
 
   # GET /data_dashboards/1
@@ -42,6 +46,7 @@ class DataDashboardsController < ApplicationController
   # PATCH/PUT /data_dashboards/1
   # PATCH/PUT /data_dashboards/1.json
   def update
+  
     respond_to do |format|
       if @data_dashboard.update(data_dashboard_params)
         format.html { redirect_to @data_dashboard, notice: 'Data dashboard was successfully updated.' }

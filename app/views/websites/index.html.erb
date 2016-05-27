@@ -32,9 +32,14 @@
             <% if website.advertising == false %>
                 <%= link_to "Your Google Ad is Pending" , website_path(website), :class => 'btn btn-warning' %>
             <% elsif website.subscribed == true %>
+            
                <%= link_to "Go to Dashboard",
-                    dashboard_path(dashboard_params),
-                    :class => 'btn btn-warning' %>
+                    dashboard_path(dashboard_params), 
+                    :class => 'btn btn-warning' if dashboard_params.present? %>
+
+               <%= link_to "Your Dashboard will updated in next 24hours",
+                    dashboards_path,
+                    :class => 'btn btn-warning' if dashboard_params.blank? %>
             <% else %>
                 <%= link_to "See How the Ad looks on Google",
                     website_path(website),
@@ -52,14 +57,17 @@
             <% end %>
             
             <td>
+            
 
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                          edit_website_path(website), :class => 'btn btn-default btn-xs' if current_user.subscribed.blank? %>
+                          edit_website_path(website), :class => 'btn btn-default btn-xs' if  website.subscribed.blank?%>
+                 
               <%= link_to "Cancel Subscription",
                           website_path(website),
                           :method => :delete,
                           :data => { :confirm => 'Are you sure? If you Proceed it will take up to 48hrs for any outstanding funds to be refunded. You will received an email shortly confirming your cancellation'},
-                          :class => 'btn btn-xs btn-danger' %>
+                          :class => 'btn btn-xs btn-danger' if  website.subscribed.present? %>
+            
             </td>
           </tr>
         <!-- /////////    Admin section         ///////////////////////// -->
@@ -141,12 +149,12 @@
                 <%= count.length %> Your Ad for ""<%= website.name %>"" is Ready to be 
                 Activated <%= link_to "Activate NOW" , website_path(website), class: "link" %>
                 <% elsif website.subscribed.present? %>
-                    Go to Dashboard to see how your Ad is performing
+                   1) Go to Dashboard to see how your Ad is performing
                 <% else %>
                 <br>
                 ------------------------------
                 <br>
-                <%= count.length %> Within the next 24hrs your Webpage Ad <br> ""<%= website.name %>""<br> will be ready to activate.
+                <%= count.length %>) Within the next 24hrs your Webpage Ad <br> ""<%= website.name %>""<br> will be ready to activate.
                 <% end %>
           <% end %>
   <% end %>
@@ -163,5 +171,5 @@
       <%= count_ads_not.length.to_s + " Ads Pending "  %>
   <% end %>
 <% end %>
-<p>
+</p>
  
