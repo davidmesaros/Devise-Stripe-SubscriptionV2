@@ -3,5 +3,6 @@ class WelcomeController < ApplicationController
 
 
   def index
+    _initialize
   end
 end

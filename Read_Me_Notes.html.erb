@@ -1,0 +1,95 @@
+<%= link_to "Your Ad is Ready 'Activate Now'", websites_path, class: "btn btn-primary" if created_ad.advertising ==  true  and created_ad.subscribed.present?  and  current_user.subscribed.blank?%> <!-- This senrio if user has cancel one of there subscription but want to activate another websire -->
+               <br>
+               <br>
+
+<!-- For  when with Dashbaord is Ready or Unsubscribed -->
+                    <% if current_user.subscribed.present? %>
+                      <%= link_to "Your Dashboard is Ready ", 
+                                dashboard_path(dashboard_params),
+                                :class => 'btn btn-warning' if dashboard_params.present? %> 
+                    <% else %>
+                      <%= link_to "Your Dashboard is Not Running", 
+                                dashboard_path(dashboard_params),
+ def created_ad
+      current_user.websites.each do |website|
+          @website_user = website
+      end
+  end                           
+
+
+  <% data_id = data_dashboard.dashboard_id %> <!-- find data_dashbord id -->
+              <% dashboard_obj = Dashboard.find_by(id: data_id) %><!-- find the Dashboard id or website Name -->
+              <%  web_id = dashboard_obj.website_id %> <!-- get the website ID -->
+              <%  @user = Website.find_by(id:web_id) %> <!-- Get the website Name/web address -->
+                  <% if data_dashboard.dashboard_id == dashboard_obj.id && current_user.id == @user.user_id %>
+
+ Table website => subscribed: false, stripeid: nil,  end_date: nil, delinquent: true, days_left: nil 
+ 
+
+ <td><%= user.subscribed %></td>
+        
+        <%  @user_payment = Stripe::Customer.all(delinquent:true) %>
+        
+        <% @user_payment.data.each do |data| %>
+        
+          <% if  data.email== user.email %>
+            
+            <td><%= data.delinquent %></td> 
+            <% user.delinquent = data.delinquent %>
+            <% user.save %>
+          <% end %>
+        <% end %>
+
+
+        <td><%= user.end_date %></td>
+        <% end_date =  user.end_date %>
+        <% start_date = Date.today %>
+        <%= days_left = (end_date.to_date - start_date.to_date).to_i if user.end_date.present? %>
+        <td><%= user.days_left = days_left %></td>
+
+
+      <!--  Delinquent -->
+                <%  @user_payment = Stripe::Customer.all(delinquent:true) %>
+                  <% @user_payment.data.each do |data| %>
+                    <% if  data.email== current_user.email %>
+                        <td><%= data.delinquent %></td> 
+                        <% website.delinquent = data.delinquent %>
+                        <% website.delinquent = nil %>
+                        <% website.save %>
+                      <% end %>
+                 <% end 
+
+
+ <% def update
+    token = params[:stripeToken] 
+    customer = Stripe::Customer.create(
+        card: token,
+        plan: 1001,
+        email: current_user.email
+        )
+
+    current_user.subscribed = true
+    
+    # I create my column here for website table
+    @@website.subscribed = true
+    @@website.save  
+    current_user.stripeid = customer.id
+    current_user.end_date =  Date.today + 1.month
+    current_user.delinquent = customer.delinquent
+
+    current_user.save
+    flash[:notice] = "Successfully Entered"
+
+    redirect_to websites_path
+
+  end %>
+
+ ADMIN can only cancel --> Ensure refund is activate on Stripe Dashboard
+   # Notes ----------------------------------------------->
+        Cancel Plan Controller IMPORTANT --->
+       #  When cancel email come through - 
+       #  In Stripe dashboard.
+       # -  Must check to refund the difference before cancel very IMPORTANt
+       # Once refund is checked the cancel the subscrption 
+
+                        

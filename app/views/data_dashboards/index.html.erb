@@ -1,6 +1,7 @@
 <%- model_class = DataDashboard -%>
 <div class="page-header">
   <h1>Dashboard Monthly </h1>
+  <p> Please note: results only display the 10 last Day's</p>
 </div>
 <% if current_user.admin.blank? %>
 
@@ -30,9 +31,11 @@
               <% dashboard_obj = Dashboard.find_by(id: data_id) %><!-- find the Dashboard id or website Name -->
               <%  web_id = dashboard_obj.website_id %> <!-- get the website ID -->
               <%  @user = Website.find_by(id:web_id) %> <!-- Get the website Name/web address -->
-                  <% if data_dashboard.dashboard_id == dashboard_obj.id && current_user.id == @user.user_id %>
+                   
+                  
+                  <% if data_dashboard.dashboard_id == session[:current_dashboard_id] && current_user.id == @user.user_id  %>
                     <td></td>
-
+                   
                     <td><%= data_dashboard.calls %></td>
                     <td><%= data_dashboard.clicks %></td>
                     <td><%= data_dashboard.searches %></td>
@@ -133,8 +136,9 @@
               dashboards_path,
               :class => 'btn btn-warning'  %>
 <% else %>
+  <% dashboard = Dashboard.find(session[:current_dashboard_id]) %>
   <%= link_to "Daily Results",
-              dashboard_path(:id => @dashboard_obj.id),
+              dashboard_path(:id => dashboard.website_id),
               :class => 'btn btn-default' %>
   
   <%= link_to "Home",

@@ -271,4 +271,16 @@ h1.Count.odometer {
 
 }
 
+@media (min-width: 992px){
+  .col-md-6 {
+      width: 60%;
+  }
+}
+
+@media (min-width: 992px)
+{
+    .col-md-offset-3 {
+        margin-left: 20%;
+      }
+}
 

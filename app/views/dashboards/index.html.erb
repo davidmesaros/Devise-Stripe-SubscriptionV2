@@ -144,7 +144,9 @@
                             dashboard_path(dashboard), :class => 'btn btn-default'  %>
                 <%= link_to "Home", root_path, :class => 'btn btn-default'  %>
                 <%= link_to 'Website Site', websites_path, class: "btn btn-primary" %>
+            <% else %>
+                <%= link_to "Home", root_path, :class => 'btn btn-default' if dashboard.blank? %>
             <% end %>   
            <% end %>
-          <%= link_to "Home", root_path, :class => 'btn btn-default' %> <!-- Might need to fix this grrr -->
+           <!-- Might need to fix this grrr -->
 <% end %>

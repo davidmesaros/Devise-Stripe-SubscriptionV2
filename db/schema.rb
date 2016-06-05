@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516010304) do
+ActiveRecord::Schema.define(version: 20160602061713) do
 
   create_table "advertises", force: :cascade do |t|
     t.text     "description"
@@ -76,9 +76,8 @@ ActiveRecord::Schema.define(version: 20160516010304) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.boolean  "subscribed"
-    t.string   "stripeid"
     t.boolean  "admin",                  default: false
+    t.boolean  "delinquent"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -88,12 +87,16 @@ ActiveRecord::Schema.define(version: 20160516010304) do
     t.string   "name"
     t.string   "product"
     t.integer  "user_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "product1"
     t.string   "product2"
-    t.boolean  "advertising", default: false
-    t.boolean  "subscribed",  default: false
+    t.boolean  "advertising",     default: false
+    t.boolean  "subscribed",      default: false
+    t.string   "stripeid"
+    t.date     "end_date"
+    t.integer  "days_left"
+    t.date     "date_subscribed"
   end
 
   add_index "websites", ["user_id"], name: "index_websites_on_user_id"

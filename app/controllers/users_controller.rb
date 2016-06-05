@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(page: params[:page], per_page: 5)
     # @users = User.all
+    delinquent # get called at application for User#index
   end
   def new
     @user = User.new

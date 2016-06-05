@@ -22,26 +22,51 @@
               <% end %>
 
           <% if current_user.admin.present? %>
+              <h4><dt><strong><%= model_class.human_attribute_name(:subscribed) %></strong></dt></h4>
+              <h4><dd><%= @website.subscribed %></dd></h4>
+              
+              <h4><dt><strong><%= model_class.human_attribute_name(:days_left) %></strong></dt></h4>
+                <% end_date =  @website.end_date %>
+                <% start_date = Date.today %>
+                <% days_left = (end_date.to_date - start_date.to_date).to_i if @website.end_date.present? %>
+                <h4><dd><%= @website.days_left = days_left %>Day's</dd><h4>
+
               <h4><dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt></h4>
               <h4><dd><%= @website.user_id %></dd></h4>
+          <% end %>
+          <br>
+          <br>
+          <% unless @website.advertising == true  %> 
+            Your Ad on Google will be displayed here within the next 24hrs
+          <% else %>
+            <% @website.advertises.each do |website| %>
+              <% if @website.advertising.present? && @website.subscribed.blank?%>
+              <p>Your Google Ad is ready to go LIVE !!</p>
+              <%= website.description %>
+              <% else %> 
+              <p>Your Google Ad is NOW LIVE</p>
+              <%= website.description %>
+              <% end %>
+            <% end %>
           <% end %>
         </dl>
         </table>
         <p>
-        <% if created_ad.subscribed.present? and @website.id == current_user.id %>
-        
-          <%= link_to " DashBoard " ,new_subscriber_path(:website => @website.id),
-              :class => 'btn btn-primary' %>
-        <% else %>
-          <%= link_to " Activate NOW" ,new_subscriber_path(:website => @website.id),
-              :class => 'btn btn-primary' if @website.advertising == true %>
+       
+          <% if @website.subscribed.present? and @website.id == current_user.id %>
+          
+            <%= link_to " DashBoard " ,new_subscriber_path(:website => @website.id),
+                :class => 'btn btn-primary' %>
+          <% else %>
+            <%= link_to " Activate NOW" ,new_subscriber_path(:website => @website.id),
+                :class => 'btn btn-primary' if @website.advertising == true %>
 
-            <% if current_user.admin.present? %>
-              <%= link_to " Pending Ad" ,edit_website_path(@website),
-                  :class => 'btn btn-primary' if @website.advertising == false %>
-            <% end %>
-        <% end %>
-            
+              <% if current_user.admin.present? %>
+                <%= link_to " Pending Ad" ,edit_website_path(@website),
+                    :class => 'btn btn-primary' if @website.advertising == false %>
+              <% end %>
+         
+         <% end %>   
         </p>
       </div>
     </div>
@@ -63,6 +88,7 @@
     <%= link_to 'Add Advertising', new_advertise_path(:website_id => @website), :class => 'btn btn-warning' if @website.advertising.blank? && @website.advertises.blank?  %>
 
     <%= link_to 'Activate Ad ', edit_website_path(@website), :class => 'btn btn-primary' if @website.advertises.present?  && !@website.advertising.present? %>
+
       
   <% end %>
   
@@ -71,7 +97,7 @@
   <% end %>
   
   <%= link_to 'Advertises List', advertises_path, :class => 'btn btn-default' if current_user.admin.present?  %>
-
+  <%= link_to 'Users List ', users_path, :class => 'btn btn-warning'  if current_user.admin.present? %>
 <p>
 <br>
 <% content_for :footer do %>
@@ -80,7 +106,7 @@
   <% else %>
     <% @website.advertises.each do |website| %>
       <% if @website.advertising.present? && @website.subscribed.blank?%>
-      <p>Your Google Ad is ready</p>
+      <p>Your Google Ad is ready ACTIVATE NOW!!</p>
       <%= website.description %>
       <% else %> 
       <p>Your Google Ad is NOW LIVE</p>

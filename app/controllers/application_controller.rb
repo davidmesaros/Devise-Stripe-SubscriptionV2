@@ -3,13 +3,16 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user!
-  helper_method :current_websites, :created_ad, :logged_in?, :dashboard_params, 
-                :dashboard_advertise, :dashboard_data, :dashboard_data_finder
+  helper_method :current_websites,:logged_in?, :dashboard_params, 
+                :dashboard_advertise, :dashboard_data, :dashboard_data_finder, 
+                :find_params_for_data_dashboard,:delinquent
 
             
           
   # around_filter :set_time_zone
-  
+  def _initialize
+    dashboard_params if current_user.present?
+  end
 
   def set_time_zone(&block)
     time_zone = current_user.try(:time_zone) || 'UTC'
@@ -19,12 +22,7 @@ class ApplicationController < ActionController::Base
   def current_websites
      Website.all
   end
-
-  def created_ad
-      current_user.websites.each do |website|
-          return website
-      end
-  end
+  
 
   def logged_in?# [method] => need to return true or false only
   !!current_user# return current _user => ie  true/false or nil
@@ -38,13 +36,19 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def dashboard_params
-    current_user.websites.each do |website|
-      if website.subscribed == true
-          params = Dashboard.find_by(:website_id => website.id)
-          return params
+  def dashboard_params # get called welcome#index
+    
+      current_user.websites.each do |website|
+        if website.subscribed == true
+            @dashboard_params = Dashboard.find_by(:website_id => website.id) 
+            
+        end
       end
-    end
+  
+  end
+
+  def find_params_for_data_dashboard # dashbaord#show
+    session[:current_dashboard_id] = @dashboard.id # storing the Id data in the sessions
   end
 
   def dashboard_advertise # google Ad link ( using erb not contoller.)
@@ -98,7 +102,7 @@ class ApplicationController < ActionController::Base
           
           @user = Website.find_by(id:web_id) # <!-- Get the website Name/web address -->
       
-          if data.dashboard_id == dashboard_obj.id && current_user.id == @user.user_id
+          if data.dashboard_id == session[:current_dashboard_id] && current_user.id == @user.user_id
             
             @data_calls << data.calls
             @data_clicks << data.clicks
@@ -185,9 +189,22 @@ class ApplicationController < ActionController::Base
                    value_floated = value * 100 
                    @average << value_floated.round(0)
 
-                    
-      end
-           
+    end
+  end
+
+  def delinquent # get called at for User#index
+      @user_payment = Stripe::Customer.all(delinquent:true) 
+        @users.each do |user|
+          @user_payment.data.each do |data| 
+            if data.email == user.email
+              user.delinquent = data.delinquent
+              user.save
+            # else
+            #   user.delinquent = false
+            #   user.save
+            end
+          end
+        end
   end
 
 

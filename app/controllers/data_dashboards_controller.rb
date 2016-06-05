@@ -4,7 +4,9 @@ class DataDashboardsController < ApplicationController
   # GET /data_dashboards
   # GET /data_dashboards.json
   def index
-    @data_dashboards = DataDashboard.all
+    # @data_dashboards = DataDashboard.all
+    @data_dashboards = DataDashboard.where(created_at: 10.days.ago..Time.now)
+
     total_dashboards # the method is called in the application => cal the total and average 
     # @data_dashboards = DataDashboard.search(params[:search].paginate(page: params[:page], per_page: 5))
     dashboard_data_finder## the method is called in the application 

@@ -5,9 +5,9 @@ class DashboardsController < ApplicationController
   # GET /dashboards
   # GET /dashboards.json
   def index
-    # @dashboards = Dashboard.all
+    @dashboards = Dashboard.all
     @dashboards = Dashboard.paginate(page: params[:page], per_page: 5)
-
+    
     # From Website index to DashBoard
     # instance to index to valid? a new link 
     # @website_new = params[:website]
@@ -22,7 +22,7 @@ class DashboardsController < ApplicationController
   def show
     @dashboard = Dashboard.find_by(:website_id => params[:id]) || Dashboard.find(params[:id])# this show gets the params when there is not ID ( websites/index => dashbaord_new)
     # @dashboard = Dashboard.find(params[:id]) if params[:id].blank? # gets ID when the params is created with an ID
-    
+    find_params_for_data_dashboard # calls @dashboard params to Application
   end
 
   # GET /dashboards/new
@@ -102,21 +102,33 @@ class DashboardsController < ApplicationController
       end
     end
 
+
     def require_same_dashbaord_id # from the show in Dashboard Controller
-      dashbaords = Dashboard.all
-      dashbaords.each do |dashboard|
-      
-      dashboard_obj = Dashboard.find_by(id: dashboard.id) #%><!-- find the Dashboard id or website Name -->
-      web_id = dashboard_obj.website_id # %> <!-- get the website ID -->
-      user = Website.find_by(id:web_id) # %> <!-- Get the website Name/web address -->
-        
-        if current_user.id == user.user_id and params[:id].to_i != dashboard.id and !current_user.admin
-          flash[:danger] = "The Page you Attempted is not Accessible"
-          redirect_to root_path
+      if current_user.admin.blank?
+        website_id_array = []
+        params_id = []
+        current_user.websites.each do |website|
+            id_website = params[:id].to_i if params[:id].to_i == website.id
+            dash_id = Website.find(id_website) if id_website.present?
+          
+              website_id_array << dash_id.id if id_website.present?#dash_id.id == params[:id].to_i and
+              params_id << params[:id].to_i
+          
+         end 
+          
+          if website_id_array[0] == nil #|| params_id[0] != website_id_array[0]  #and params[:id].to_i != website.id
+               
+                flash[:danger] = "The Page you Attempted is not Accessible"
+                redirect_to root_path 
+                return
+          
+                
+          end
         end
       
-      end
     end
+
+    
 
 
 end

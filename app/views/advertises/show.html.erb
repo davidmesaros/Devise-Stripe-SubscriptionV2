@@ -23,6 +23,16 @@
 <% else %>
       <%= link_to "Home",
                  root_path, :class => 'btn btn-default'  %>
-      <%= link_to "Dashboard",
-                 dashboard_path(dashboard_params), :class => 'btn btn-default'  %>
+      <% current_user.websites.each do |website| %>
+        <% if website.id == @advertise.website_id %>
+        <% dash_id  = Dashboard.find_by(website_id: @advertise.website_id ) %>
+          <% if dash_id.present? %>
+
+          <%= link_to "Dashboard",
+                     dashboard_path(website.id), :class => 'btn btn-default'  %>
+          
+          <% end %>
+        <% end %>
+      <% end %>
+
 <% end %>

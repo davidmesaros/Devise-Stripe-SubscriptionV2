@@ -10,35 +10,49 @@
         <br>
         <% if current_user.websites.present? %>
               
-              <% if created_ad.advertising ==  true  && !created_ad.subscribed.present? %> <!--&& !created_ad.subscribed.nil? -->
-                 <%= link_to "Your Ad is Ready 'Activate Now'", website_path(created_ad.id), class: "btn btn-primary" %>
-              <% elsif created_ad.subscribed.present? %>
+            <% current_user.websites.each do |website| %>
+              <% if website.advertising ==  true  and website.subscribed.blank? %> <!--&& !created_ad.subscribed.nil? -->
+                 <%= link_to "Your Ad is Ready 'Activate Now'", website_path(website), class: "btn btn-primary" %>
+                 <br> 
+                  <%= website.name %>
+              <br>
+              <br>
+              <% elsif website.subscribed.present? %>
                     <!-- Dashboard to update in 24 hrs       -->
                     <%= link_to "Your Dashboard will be ready in the next 24 hours ", 
                               websites_path,
-                              :class => 'btn btn-warning' if dashboard_params.blank?%>
-                    <!-- For  when with Dashbaord is Ready -->
-                    <%= link_to "Your Dashboard is Ready ", 
-                              dashboard_path(dashboard_params),
-                              :class => 'btn btn-warning' if dashboard_params.present? %> 
+                              :class => 'btn btn-warning' if website.dashboards.blank?%>
+                    <!-- For  when with Dashbaord is Ready  -->
+                   
+
+                      <%= link_to "Your Dashboard is Ready", 
+                                dashboard_path(website.id),
+                                :class => 'btn btn-warning' if website.dashboards.present? %>
+                      <br> 
+                      <%= website.name %>
+                      
                   
                   <br>
                   <br>
-                    <%= link_to 'Add Another Website Site', new_website_path, class: "btn btn-primary" %>
-                  <br>
-                  <br>
-                  <% current_user.websites.each do |website| %>
+                   
+                  
                     <% if website.advertising == false %>
                       <%= link_to "You have an Ad that's Getting Created", websites_path, class: "btn btn-info" %>
                       <% end %>
-                    <% end %>
+                  
               <% else %>
-                  <% current_user.websites.each do |website| %>
+                  
                     <% if website.advertising == false %>
                       <%= link_to "You have an Ad that's Getting Created", website_path(website), class: "btn btn-warning" %>
                       <% end %>
-                    <% end %>
+                  <br>
+                  <br>
               <% end %>
+
+            <% end %>
+             <%= link_to 'Add Another Website Site', new_website_path, class: "btn btn-primary" %>
+                  <br>
+                  <br>
         
         <% else %>
             <h5> With Only a few small Clicks we'll have you Advertsing on Google in no time </h5>

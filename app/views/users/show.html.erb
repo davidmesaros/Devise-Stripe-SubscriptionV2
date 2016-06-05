@@ -33,10 +33,17 @@
   <dd><%= @user.unconfirmed_email %></dd>
   <dt><strong><%= model_class.human_attribute_name(:admin) %>:</strong></dt>
   <dd><%= @user.admin %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:subscribed) %>:</strong></dt>
-  <dd><%= @user.subscribed %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:stripeid) %>:</strong></dt>
-  <dd><%= @user.stripeid %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:delinquent) %>:</strong></dt>
+  <dd><%= @user.delinquent %></dd>
+  <% if @user.delinquent.present? %>
+    <dt><strong>Websites Delinquent </strong></dt>
+    <% @user.websites.each do |website| %>
+          <br><h4><%= link_to website.name, website_path(website) %></h4>
+
+    <% end %>
+  <% end %>
+  
+  
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
