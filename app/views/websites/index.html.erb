@@ -160,7 +160,7 @@
 <% dash_id = Advertise.find_by(website_id:web_id ) %>
 <%= link_to "Your Google Ad", 
               advertise_path(:id => dash_id), 
-              :class => 'btn btn-default' if current_user.admin.blank? %>
+              :class => 'btn btn-default' if current_user.admin.blank?  and dash_id.present? %>
 
 <%= link_to "Advertise List",
             advertises_path,
