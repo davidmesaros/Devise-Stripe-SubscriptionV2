@@ -1,6 +1,5 @@
-date_formats = {
-  concise: '%d-%b-%Y' # 13-Jan-2014
-}
+# Date
+Date::DATE_FORMATS[:default] = "%d/%m/%Y" 
 
-Time::DATE_FORMATS.merge! date_formats
-Date::DATE_FORMATS.merge! date_formats
+# Time
+Time::DATE_FORMATS[:default] = "%d/%m/%Y %H:%M" 

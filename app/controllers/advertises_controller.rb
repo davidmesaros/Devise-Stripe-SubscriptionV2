@@ -39,7 +39,13 @@ class AdvertisesController < ApplicationController
         format.html { render :new }
         format.json { render json: @advertise.errors, status: :unprocessable_entity }
       end
+      website = Website.find(@advertise.website_id)
+      user = User.find(website.user_id )
+      SwiftadsMailer.swiftads_advertise_created(user, website, @advertise).deliver_now
     end
+      
+      
+    
   end
 
   # PATCH/PUT /advertises/1

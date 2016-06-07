@@ -56,7 +56,9 @@ class WebsitesController < ApplicationController
         format.json { render json: @website.errors, status: :unprocessable_entity }
       end
     end
-    SwiftadsMailer.swiftads_email_update(@website.user, @website.name, @website.product, @website.product1, @website.product2).deliver_now # this get email out when the cleint may have update there website details
+    if current_user.admin.blank?
+      SwiftadsMailer.swiftads_email_update(@website.user, @website.name, @website.product, @website.product1, @website.product2).deliver_now # this get email out when the cleint may have update there website details
+    end
   end
 
   # DELETE /websites/1

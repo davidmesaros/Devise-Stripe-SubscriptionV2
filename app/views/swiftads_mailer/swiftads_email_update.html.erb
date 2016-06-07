@@ -6,10 +6,19 @@
   <body>
     <h1>Hi <%= @user.email %></h1>
     <p>
-      Thank You for updating your website  "<%= @website %>". with the following products - </p>
-      <li><%= @product %></li> 
-      <li><%= @product1 %></li> 
+
+      Thank You for updating your  Product/Services for your website  "<%= @website %>" - </p>
+      <% if @product.present? %>
+        <li><%= @product %></li> 
+      <% end %>
+      
+      <% if @product1.present? %>
+        <li><%= @product1 %></li> 
+      <% end %>
+      
+      <% if @product2.present? %>
       <li><%= @product2 %></li> 
+      <% end %>
       <p>You will be notified once your Google Ad is ready.</p>
     
   </body>

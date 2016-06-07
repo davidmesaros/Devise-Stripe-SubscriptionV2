@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <%=  image_tag 'swift.png' %>
+    <h4> Tax Invoice for  <%= Date.today %> </h4>
+    <p>
+      <h4> Bill to   <%= @user.email %> </h4><br><br>
+      for the website <%= @website %> , User Id <%= @stripeid %>
+    </p>
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <br>
+              <th>Details</th>
+              <br>
+              <th>Total</th>
+              <br>
+              <th>Paid</th>
+              <br>
+              
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                
+                <td>Google Ads</td>
+                <br>
+                <td>Google Advertising - Monthly</td>
+                <br>
+                <td>$375</td>
+                <br>
+                <td>$375</td>
+                <br>
+                
+            </tbody>
+    </table>
+    <p>
+      Kind regards,
+    </p>
+    <p>
+      Swiftads Team
+    </p>
+  </body>
+</html>

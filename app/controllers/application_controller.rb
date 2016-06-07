@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   helper_method :current_websites,:logged_in?, :dashboard_params, 
                 :dashboard_advertise, :dashboard_data, :dashboard_data_finder, 
-                :find_params_for_data_dashboard,:delinquent
+                :find_params_for_data_dashboard, :delinquent
 
             
           

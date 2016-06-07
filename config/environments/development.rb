@@ -10,6 +10,7 @@ Rails.application.configure do
   config.eager_load = false
   
 
+  config.action_mailer.asset_host = 'http://localhost:3000/'
 
   config.action_mailer.delivery_method = :test
 
