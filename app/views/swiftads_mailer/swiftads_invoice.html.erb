@@ -4,7 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <%=  image_tag 'swift.png' %>
+
+    <%=  image_tag 'swift.png' , :class => 'logo' %>
     <h4> Tax Invoice for  <%= Date.today %> </h4>
     <p>
       <h4> Bill to   <%= @user.email %> </h4><br><br>

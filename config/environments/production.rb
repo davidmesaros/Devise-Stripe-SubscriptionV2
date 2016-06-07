@@ -10,7 +10,7 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
   
-   config.action_mailer.asset_host = 'https://swiftads.herokuapp.com/'
+  config.action_mailer.asset_host = 'https://swiftads.herokuapp.com/'
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.default_url_options = { :host => 'https://swiftads.herokuapp.com/', :protocol => 'https'}
