@@ -31,7 +31,7 @@ class SubscribersController < ApplicationController
 
         
 
-        flash[:notice] = "Successfully Entered , an email will be sent shortly confirming your payment"
+        flash[:notice] = "Your Payment was successful, an email will be sent shortly confirming your payment"
 
         rescue Stripe::CardError => e
         flash[:danger] = 'Your Credit Card was decline. Please check your Credit Card Details and try again. If it Fails one more time
