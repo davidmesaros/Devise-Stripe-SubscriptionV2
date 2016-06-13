@@ -1,3 +1,4 @@
+<div class="parent">
 <% if current_user %>
   <h3>Welcome: <%= current_user.email %></h3>
     <%if current_user.admin.present? %>
@@ -50,7 +51,7 @@
               <% end %>
 
             <% end %>
-             <%= link_to 'Add Another Website Site', new_website_path, class: "btn btn-primary" %>
+             <%= link_to 'Add Another Website', new_website_path, class: "btn btn-primary" %>
                   <br>
                   <br>
         
@@ -68,21 +69,21 @@
 <div class="jumbotron">
   <h2>Welcome to Swiftads!</h2>
     <p class="lead">
-      We love managing your Google Advertising. Sign up!
+      We love generating NEW leads to your Website through Google. Sign up!
     </p>
 </div>
   <div class="row">
     <div class="plans clearfix">
-      <div class="col-lg-6 col-lg-offset-1 plan">
-        <h2>Swiftads Package</h2>
+      <div class="col-lg-8 col-lg-offset-1 plan">
+        <h2>Swiftads Package includes the following:</h2>
         <div class="features">
           <ul>
-            <li>Swiftads will create an Ad based on Google's Keywords and Website </li>
-            <li>Your Ad will be displayed Top Position when some searching your products/ keywords</li>
-            <li>Swiftads works smartly with Google to optimise your ad and get the best results with miniumal spending</li>
-            <li>You Only Get Charge when someone clicks onto your Ad</li>
-            <li>Price: Max amount is $300 / month that goes directly to Google </br>
-            + swiftads fee: 25% (ie total amount $375/month) </li>
+            <li>Swiftads will create an Ad for your website based on your Key Product/Services </li>
+            <li>Your Ad to your website will be displayed at the Top on Google Search page when someone searches for your product/service</li>
+            <li>Swiftads works smartly with Google to optimise your ad and have the best results with generating new leads/customers with miniumal spending</li>
+            <li>You Only Get Charged when someone clicks onto your Ad</li>
+            <li>Price: Max amount is $300 / month that goes directly to Google to advertise your website. </br>
+            + swiftads service fee: 25% (ie total amount $375/month) </li>
           </ul>
         </div>
         
@@ -101,4 +102,5 @@
     <!--  -->
   </div>
 <% end %>
+</div>
 

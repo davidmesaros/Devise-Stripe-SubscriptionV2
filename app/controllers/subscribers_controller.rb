@@ -28,7 +28,7 @@ class SubscribersController < ApplicationController
         
         SwiftadsMailer.new_subscription(@@website.user, @@website.name, @@website.stripeid).deliver_now
 
-
+        SwiftadsMailer.swiftads_invoice(@@website.user, @@website.name, @@website.stripeid).deliver_now
         
 
         flash[:notice] = "Your Payment was successful, an email will be sent shortly confirming your payment"
@@ -41,7 +41,7 @@ class SubscribersController < ApplicationController
         flash[:notice] = 'Some error occurred.'
       end
 
-      SwiftadsMailer.swiftads_invoice(@@website.user, @@website.name, @@website.stripeid).deliver_now
+      
       redirect_to websites_path
 
     end

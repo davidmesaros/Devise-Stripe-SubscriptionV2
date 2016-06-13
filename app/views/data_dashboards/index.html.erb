@@ -1,7 +1,15 @@
 <%- model_class = DataDashboard -%>
 <div class="page-header">
   <h1>Dashboard Monthly </h1>
-  <p> Please note: results only display the 10 last Day's</p>
+  <% if current_user.admin.blank? %>
+    <p> Please note: The Dashboard will only display the last 8 Days Results </p>
+  <% end %>
+</div>
+
+<div align="center">
+
+      <%= will_paginate if current_user.admin.present? %>
+
 </div>
 <% if current_user.admin.blank? %>
 
@@ -14,7 +22,7 @@
             <th><%= model_class.human_attribute_name(:clicks) %></th>
             <th><%= model_class.human_attribute_name(:searches) %></th>
             <th><%= model_class.human_attribute_name(:cost) %></th>
-            <th><%= model_class.human_attribute_name(:budget) %></th>
+            
             <th><%= model_class.human_attribute_name(:smartphones) %></th>
             <th><%= model_class.human_attribute_name(:tablets) %></th>
             <th><%= model_class.human_attribute_name(:computers) %></th>
@@ -39,8 +47,7 @@
                     <td><%= data_dashboard.calls %></td>
                     <td><%= data_dashboard.clicks %></td>
                     <td><%= data_dashboard.searches %></td>
-                    <td><%= data_dashboard.cost %></td>
-                    <td><%= data_dashboard.budget %></td>
+                    <td>$<%= data_dashboard.cost %></td>
                     <td><%= data_dashboard.smartphones %>%</td>
                     <td><%= data_dashboard.tablets %>%</td>
                     <td><%= data_dashboard.computers %>%</td>
@@ -54,8 +61,9 @@
                   <td><%= "#{@calls}" %></td>
                   <td><%= "#{@clicks}" %></td>
                   <td><%= "#{@searches}" %></td> 
-                  <td><%= "#{@cost}" %></td> 
-                  <td><%= "#{@budget}" %></td> 
+                  <td>$<%= "#{@cost}" %></td> 
+                  
+                  <!-- <td><%= "#{@budget}" %></td>  -->
                   <td><%= @average[0] %>%</td> 
                   <td><%= @average[1] %>%</td> 
                   <td><%= @average[2] %>%</td> 
@@ -96,8 +104,9 @@
                     <td><%= data_dashboard.calls %></td>
                     <td><%= data_dashboard.clicks %></td>
                     <td><%= data_dashboard.searches %></td>
-                    <td><%= data_dashboard.cost %></td>
-                    <td><%= data_dashboard.budget %></td>
+                    <td>$<%= data_dashboard.cost %></td>
+                    <td>$<%= data_dashboard.budget %></td>
+                    
                     <td><%= data_dashboard.smartphones %>%</td>
                     <td><%= data_dashboard.tablets %>%</td>
                     <td><%= data_dashboard.computers %>%</td>
@@ -121,8 +130,8 @@
                   <td><%= "#{@calls}" %></td>
                   <td><%= "#{@clicks}" %></td>
                   <td><%= "#{@searches}" %></td> 
-                  <td><%= "#{@cost}" %></td> 
-                  <td><%= "#{@budget}" %></td> 
+                  <td>$<%= "#{@cost}" %></td> 
+                  <td>$<%= "#{@budget}" %></td> 
                   <td><%= "#{@smartphones}" %>%</td> 
                   <td><%= "#{@tablets}" %>%</td> 
                   <td><%= "#{@computers}" %>%</td> 

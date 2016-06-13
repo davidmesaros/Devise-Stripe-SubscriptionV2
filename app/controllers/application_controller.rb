@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   helper_method :current_websites,:logged_in?, :dashboard_params, 
                 :dashboard_advertise, :dashboard_data, :dashboard_data_finder, 
-                :find_params_for_data_dashboard, :delinquent
+                :find_params_for_data_dashboard, :delinquent, :mailer_array, :renew_date
 
             
           
@@ -187,25 +187,79 @@ class ApplicationController < ActionController::Base
                   value  = value /total.to_f  
                   
                    value_floated = value * 100 
-                   @average << value_floated.round(0)
+                   @average << value_floated.round(0) if !value_floated.nan?
 
     end
   end
 
   def delinquent # get called at for User#index
-      @user_payment = Stripe::Customer.all(delinquent:true) 
-        @users.each do |user|
-          @user_payment.data.each do |data| 
-            if data.email == user.email
-              user.delinquent = data.delinquent
-              user.save
-            # else
-            #   user.delinquent = false
-            #   user.save
-            end
+    @user_payment = Stripe::Customer.all(delinquent:true) 
+    @users.each do |user|
+      @user_payment.data.each do |data| 
+        if data.email == user.email
+          user.delinquent = data.delinquent
+          user.save
+        # else
+        #   user.delinquent = false
+        #   user.save
+        end
+      end
+    end
+  end
+
+  def mailer_array
+    @website = Website.find(@dashboard.website_id)
+      if @dashboard.data_dashboards.length < 4
+        SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+      elsif @dashboard.data_dashboards.length == 4
+        SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+      end
+  end
+
+  def renew_date
+    @websites.each do |web|
+      if web.end_date.present?
+        end_date = web.end_date + 1.day
+        start_date = web.date_subscribed
+          if end_date == Date.today
+            web.date_subscribed = Date.today 
+            web.end_date = Date.today + 1.month
+            web.save
           end
         end
+      end
   end
+
+  
+
+  #------------------------------------------------------->
+  # ==> do this a later date...
+
+  # def destroy_data
+       # @data_dashboards = DataDashboard.where(['created_at > ?', 1.month.ago]).destroy_all
+  # end
+
+
+  # def bal_bugdet  ==> do this a later date... for Data_Dashboard controller.. 
+    
+  #   data_budget = []
+  #   @data_dashboards.each_with_index do|data, index|
+      
+  #     if index == 0 
+  #       data.budget = 300 
+  #       data_budget << data.budget if index == 0
+  #     end
+  #   end
+  #   @data_dashboards.each do |dash|
+  #      data_index = data_budget[0] - dash.cost
+  #     data_budget << data_index
+  #     last = data_budget.pop
+
+  #   end
+
+    
+  # end
+  #------------------------------------------------------->
 
 
 end

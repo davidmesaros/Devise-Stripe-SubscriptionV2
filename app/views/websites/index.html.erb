@@ -2,6 +2,11 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<div align="center">
+
+    <%= will_paginate if current_user.admin.present? %>
+
+</div>
 <div class = "table-responsive">
   <table class="table table-striped">
     <thead>
@@ -126,6 +131,7 @@
                
                 
                 <td><%= website.days_left = days_left %> Day's</td>
+                
                 <td><%= website.user_id %></td>
                 <td><%= website.date_subscribed if website.date_subscribed.present? %></td> 
             <% end %>

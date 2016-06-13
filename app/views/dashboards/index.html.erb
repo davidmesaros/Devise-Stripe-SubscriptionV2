@@ -5,7 +5,7 @@
         </div>
         <div align="center">
 
-          <%= will_paginate %>
+          <%= will_paginate if current_user.admin.present? %>
 
         </div>
         <table class="table table-striped">
@@ -16,7 +16,7 @@
               <th><%= model_class.human_attribute_name(:clicks) %></th>
               <th><%= model_class.human_attribute_name(:searches) %></th>
               <th><%= model_class.human_attribute_name(:cost) %></th>
-              <th><%= model_class.human_attribute_name(:budget) %></th>
+              <th>Balance</th>
               <th><%= model_class.human_attribute_name(:smartphones) %></th>
               <th><%= model_class.human_attribute_name(:tablets) %></th>
               <th><%= model_class.human_attribute_name(:computers) %></th>
@@ -32,8 +32,29 @@
                 <td><%= dashboard.calls %></td>
                 <td><%= dashboard.clicks %></td>
                 <td><%= dashboard.searches %></td>
-                <td><%= dashboard.cost %></td>
-                <td><%= dashboard.budget %></td>
+                <td>$<%= dashboard.cost %></td>
+
+
+                <% website = Website.find(dashboard.website_id) %>
+                <% total_cost = [] %>
+                <% dashboard.data_dashboards.each do|num| %>
+                  <% if website.date_subscribed != nil %>
+                    <% if  website.date_subscribed < num.updated_at %>
+                      <% total_cost << num.cost if  website.date_subscribed < num.updated_at %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+
+               
+                
+                <% @cost = 0 %>
+                  <% total_cost.each { |a| @cost +=a } %>
+                <td>$<%=  dashboard.budget - @cost %></td>
+               
+                
+               
+                
                 <td><%= dashboard.smartphones %>%</td>
                 <td><%= dashboard.tablets %>%</td>
                 <td><%= dashboard.computers %>%</td>

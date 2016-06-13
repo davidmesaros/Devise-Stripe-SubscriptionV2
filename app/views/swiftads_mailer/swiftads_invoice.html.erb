@@ -7,11 +7,9 @@
     <div style="height:200px; weight:200px">
     <%=  image_tag 'swiftsl.png' %>
     </div>
-    <h3> Tax Invoice for: <%= @website %>  </h3>
-    <h4> To: <%= @user.email %> for - <%= Date.today %> </h4>
-     
-    
-      <table class="table table-striped">
+    <h3> Tax Invoice for: <%= @website %>  for - <%= Date.today %></h3>
+    <h4> To: <%= @user.email %> </h4>
+     <table class="table table-striped">
           <thead>
             <tr>
               <th>Item</th>
@@ -24,7 +22,7 @@
               <br>
               <th> </th>
               <th> </th>
-              <th>Amount Paid</th>
+              <th>Paid</th>
               <br>
               
             </tr>
@@ -45,14 +43,16 @@
                 <td height="50">$375</td>
                 <br>
                 
-            </tbody>
+          </tbody>
     </table>
     <p>
+      <br>
       Kind regards,
       <br>
       <br>
     </p>
     <p>
+
       Swiftads Team
     </p>
   </body>

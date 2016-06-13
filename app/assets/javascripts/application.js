@@ -17,3 +17,15 @@
 //= require_tree .
 
 
+function advertising() {
+    alert("Ensure that Ads been created - Only TRUE or False ");
+}
+
+function subscribed() {
+    alert("DO NOT CHANGE THIS FIELD");
+}
+
+function websiteID() {
+    alert("DO NOT CHANGE THIS FIELD");
+}
+

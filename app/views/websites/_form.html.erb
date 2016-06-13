@@ -54,6 +54,14 @@
         </div>
 
         <div class="form-group">
+          <%= f.label :created_at, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :created_at, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:created_at) %>
+        </div>
+
+        <div class="form-group" onclick="advertising()" >
           <%= f.label :advertising, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
             <%= f.text_field :advertising, :class => 'form-control' %>
@@ -61,7 +69,7 @@
           <%=f.error_span(:advertising) %>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" onclick="subscribed()">
           <%= f.label :subscribed, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
             <%= f.text_field :subscribed, :class => 'form-control' %>

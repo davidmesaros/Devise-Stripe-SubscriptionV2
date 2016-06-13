@@ -5,7 +5,10 @@ class WebsitesController < ApplicationController
   # GET /websites.json
   def index
     
-    @websites = Website.all 
+    @websites = Website.all  if current_user.admin.blank?
+    @websites = Website.paginate(page: params[:page], per_page: 8) if current_user.admin.present?
+
+    renew_date # renew-date after 1 month...application control is the method block
     
   end
 
@@ -23,6 +26,7 @@ class WebsitesController < ApplicationController
 
   # GET /websites/1/edit
   def edit
+    
   end
 
   # POST /websites

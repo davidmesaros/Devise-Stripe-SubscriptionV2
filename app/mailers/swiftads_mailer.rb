@@ -43,4 +43,16 @@ class SwiftadsMailer < ApplicationMailer
     @@stripeid = stripeid
     mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Tax Invoice - Swiftads')
   end
+
+  def dashboard_update(user, website)
+    @user = user
+    @website = website
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Swiftads Dashboard Update')
+  end
+
+  def last_dashboard_update(user, website)
+    @user = user
+    @website = website
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Swiftads Dashboard Update')
+  end
 end

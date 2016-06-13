@@ -6,7 +6,7 @@ class DashboardsController < ApplicationController
   # GET /dashboards.json
   def index
     @dashboards = Dashboard.all
-    @dashboards = Dashboard.paginate(page: params[:page], per_page: 5)
+    @dashboards = Dashboard.paginate(page: params[:page], per_page: 8) if current_user.admin.present?
     
     # From Website index to DashBoard
     # instance to index to valid? a new link 
@@ -53,6 +53,8 @@ class DashboardsController < ApplicationController
       end
 
       dashboard_data # this from the help controller -> DataDashboard.new => when Dashboard created
+      @website = Website.find(@dashboard.website_id)
+      SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now # when dashboard created
     end
   end
 
@@ -70,7 +72,8 @@ class DashboardsController < ApplicationController
       end
 
       dashboard_data # this from the help controller -> DataDashboard.new => collected the update value and create a new Data
-     
+      #
+      mailer_array # application controll => limits the number Dashboard Update
     end
   end
 
