@@ -42,6 +42,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-will_paginate (0.0.10)
       will_paginate
+    browser (2.1.0)
     builder (3.2.2)
     byebug (8.2.4)
     coffee-rails (4.1.1)
@@ -187,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-will_paginate (= 0.0.10)
+  browser
   byebug
   coffee-rails (~> 4.1.0)
   devise

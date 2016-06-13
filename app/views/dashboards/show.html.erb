@@ -2,70 +2,74 @@
 <div class="page-header">
   <h1>Dashboard - Daily </h1>
 </div>
-
-<table class="table table-striped">
-          <thead>
+<div class = "table-responsive">
+  <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= model_class.human_attribute_name(:calls) %></th>
+            <th><%= model_class.human_attribute_name(:clicks) %></th>
+            <th><%= model_class.human_attribute_name(:searches) %></th>
+            <th><%= model_class.human_attribute_name(:cost) %></th>
+            <th>Balance</th>
+            <th><%= model_class.human_attribute_name(:smartphones) %></th>
+            <th><%= model_class.human_attribute_name(:tablets) %></th>
+            <th><%= model_class.human_attribute_name(:computers) %></th>
+            <th> Web Name</th>
+            <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
+            <th> Last Updated at </th>
+          </tr>
+        </thead>
+        <tbody>
             <tr>
-              <th><%= model_class.human_attribute_name(:calls) %></th>
-              <th><%= model_class.human_attribute_name(:clicks) %></th>
-              <th><%= model_class.human_attribute_name(:searches) %></th>
-              <th><%= model_class.human_attribute_name(:cost) %></th>
-              <th>Balance</th>
-              <th><%= model_class.human_attribute_name(:smartphones) %></th>
-              <th><%= model_class.human_attribute_name(:tablets) %></th>
-              <th><%= model_class.human_attribute_name(:computers) %></th>
-              <th> Web Name</th>
-              <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
-              <th> Last Updated at </th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr>
-                
-                <td><%= @dashboard.calls %></td>
-                <td><%= @dashboard.clicks %></td>
-                <td><%= @dashboard.searches %></td>
-                <td>$<%= @dashboard.cost %></td>
+              
+              <td><%= @dashboard.calls %></td>
+              <td><%= @dashboard.clicks %></td>
+              <td><%= @dashboard.searches %></td>
+              <td>$<%= @dashboard.cost %></td>
 
-                <% website = Website.find(@dashboard.website_id) %>
-                <% total_cost = [] %>
-                <% @dashboard.data_dashboards.each do|num| %>
-                  <% if  website.date_subscribed < num.updated_at %>
-                    <% total_cost << num.cost if  website.date_subscribed < num.updated_at %>
-                  <% end %>
+              <% website = Website.find(@dashboard.website_id) %>
+              <% total_cost = [] %>
+              <% @dashboard.data_dashboards.each do|num| %>
+                <% if  website.date_subscribed < num.updated_at %>
+                  <% total_cost << num.cost if  website.date_subscribed < num.updated_at %>
                 <% end %>
+              <% end %>
 
-               
-                
-                <% @cost = 0 %>
-                  <% total_cost.each { |a| @cost +=a } %>
-                <td>$<%=  @dashboard.budget - @cost %></td>
+             
+              
+              <% @cost = 0 %>
+                <% total_cost.each { |a| @cost +=a } %>
+              <td>$<%=  @dashboard.budget - @cost %></td>
 
-                
+              
 
-                <td><%= @dashboard.smartphones %>%</td>
-                <td><%= @dashboard.tablets %>%</td>
-                <td><%= @dashboard.computers %>%</td>
-               
-                <% website_name = Website.find_by(:id => @dashboard.website_id) %> 
-                <% website_name.name %>
-                <td><%= website_name.name %> </td>
-               <!--  <td><%= @dashboard.created_at.to_s(:due_date) %></td> -->
-                
-                <td><%= @dashboard.updated_at.to_s(:due_date) %></td>
-              </tr>
-            </tbody>
-    </table>
+              <td><%= @dashboard.smartphones %>%</td>
+              <td><%= @dashboard.tablets %>%</td>
+              <td><%= @dashboard.computers %>%</td>
+             
+              <% website_name = Website.find_by(:id => @dashboard.website_id) %> 
+              <% website_name.name %>
+              <td><%= website_name.name %> </td>
+             <!--  <td><%= @dashboard.created_at.to_s(:due_date) %></td> -->
+              
+              <td><%= @dashboard.updated_at.to_s(:due_date) %></td>
+            </tr>
+        </tbody>
+  </table>
+</div>
 <%= link_to 'Dashboards',
               dashboards_path, :class => 'btn btn-default'  if current_user.admin.present? %>
 
 
 <%= link_to 'Monthly Results',
               data_dashboards_path, :class => 'btn btn-default'  if current_user.admin.blank? %>
-             
+            
 <%= link_to "Home", root_path, :class => 'btn btn-default'  %>
+
 <%= link_to "Your Google Ad", advertise_path(dashboard_advertise), :class => 'btn btn-default'  %>
+
 <%= link_to 'Website Details', websites_path, class: "btn btn-primary" %>
+
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_dashboard_path(@dashboard), :class => 'btn btn-warning' if current_user.admin.present? %>
 
@@ -74,6 +78,8 @@
 
     <%- model_class = Dashboard -%>
     <div class="page-header">
+      <% if browser.name === 'iPhone' || browser.name === 'iPad' %> data-no-turbolink <% end %>
+      
          <!--  <h1>Line Break</h1> -->
     </div>
 

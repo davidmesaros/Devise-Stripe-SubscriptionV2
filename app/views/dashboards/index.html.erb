@@ -167,7 +167,18 @@
                 <%= link_to 'Website Site', websites_path, class: "btn btn-primary" %>
             <% else %>
                 <%= link_to "Home", root_path, :class => 'btn btn-default' if dashboard.blank? %>
-            <% end %>   
-           <% end %>
-           <!-- Might need to fix this grrr -->
+            <% end %>
+              
+          <% end %>
+          
+          <% current_user.websites.each do |web| %>
+            
+            <% dashboard = Dashboard.find_by(website_id: web.id) %>
+            <% if dashboard.blank? %>
+               <%= link_to "Home", root_path,
+                        :class => 'btn btn-default' %>  
+               <!-- Might need to fix this grrr -->
+            <% end %>
+          <% end %>
+          
 <% end %>

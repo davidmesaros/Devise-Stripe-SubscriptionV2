@@ -20,7 +20,7 @@
               <br>
               <% elsif website.subscribed.present? %>
                     <!-- Dashboard to update in 24 hrs       -->
-                    <%= link_to "Your Dashboard will be ready in the next 24 hours ", 
+                    <%= link_to "Your Dashboard will be Ready soon ", 
                               websites_path,
                               :class => 'btn btn-warning' if website.dashboards.blank?%>
                     <!-- For  when with Dashbaord is Ready  -->
@@ -54,6 +54,9 @@
              <%= link_to 'Add Another Website', new_website_path, class: "btn btn-primary" %>
                   <br>
                   <br>
+                  <% content_for :footer do %>
+                  <p>: Please note: for every new website you activate for Google Ads, the fee is $300 + 25% for each website Ad that goes live</p>
+                  <% end %>
         
         <% else %>
             <h5> With Only a few simple Clicks we'll have you Advertsing on Google in no time </h5>
@@ -80,10 +83,11 @@
           <ul>
             <li>Swiftads will create an Ad for your website based on your Key Product/Services </li>
             <li>Your Ad to your website will be displayed at the Top on Google Search page when someone searches for your product/service</li>
-            <li>Swiftads works smartly with Google to optimise your ad and have the best results with generating new leads/customers with miniumal spending</li>
+            <li>Swiftads works smartly with Google to optimise your ad and have the best results by generating new leads/customers with miniumal spending</li>
             <li>You Only Get Charged when someone clicks onto your Ad</li>
             <li>Price: Max amount is $300 / month that goes directly to Google to advertise your website. </br>
             + swiftads service fee: 25% (ie total amount $375/month) </li>
+            <li> MONEY BACK if your not happy after 3 months using swiftads we will refund the $900 back to your account. </li>
           </ul>
         </div>
         
