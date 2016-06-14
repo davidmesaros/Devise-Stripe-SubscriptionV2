@@ -301,6 +301,14 @@ a.btn.btn-primary.btn-lg.sign-up {
   margin-bottom: 1em;
 }
 
+.font_size{
+  font-size: 16px;
+}
+
+.hide{
+  display: none;
+}
+
 @media (max-width: 1200px){
  div#chart2 {
     margin-left: 46em;
@@ -312,6 +320,10 @@ a.btn.btn-primary.btn-lg.sign-up {
   div#chart2 {
     margin-left: 36em;
     margin-top: -299px
+  }
+
+  .chart{
+    display: block;
   }
 }
 
@@ -325,5 +337,17 @@ a.btn.btn-primary.btn-lg.sign-up {
   div#chart1 {
     display:none;
   }
+
+  
 }
 
+@media (max-width: 1024px) {
+  .hide{
+  display: block !important;
+  }
+
+  h1.Count.odometer {
+    margin-left: -15px;
+}
+  
+}
