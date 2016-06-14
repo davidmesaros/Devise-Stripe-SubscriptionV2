@@ -164,25 +164,26 @@
       </script>
       <br>
       <br>
-      <p><span class= 'font_size'>Daily Clicks</span>  - People that have clicked on to your Ad and went to your website  </p>
-      <h1 class="Count odometer" align='center'><%= @dashboard.clicks.to_i %></h1>
-      <br>
-      <br>
-      <p class ="hide" ><span class= 'font_size'>Daily Searches</span>  - Number of Searches on Goolge for your Key Product or services  </p>
-      <h1 class="Count_Searches odometer hide" align='center'><%= @dashboard.searches.to_i %></h1>
-      <br>
-      <br>
-      <% devise = {'smartphones' => @dashboard.smartphones, 
-                  'tablets' => @dashboard.tablets,
-                  'computers' => @dashboard.computers } %>
-
-      <% value_devise = devise.max_by{|k,v|  v} %> 
-      <p class="hide"><span class= 'font_size '>Device Search </span>  -  The Devise that has the most search on for your product today were <%=value_devise[0] %>  </p>
       
+          <p><span class= 'font_size'>Daily Clicks</span>  - People that have clicked on to your Ad and went to your website  </p>
+          <h1 class="Count odometer" align='center'><%= @dashboard.clicks.to_i %></h1>
+          <br>
+          <br>
+          <p class ="hide" ><span class= 'font_size'>Daily Searches</span>  - Number of Searches on Goolge for your Key Product or services  </p>
+          <h1 class="Count_Searches odometer hide" align='center'><%= @dashboard.searches.to_i %></h1>
+          <br>
+          <br>
+          <% devise = {'smartphones' => @dashboard.smartphones, 
+                      'tablets' => @dashboard.tablets,
+                      'computers' => @dashboard.computers } %>
+
+          <% value_devise = devise.max_by{|k,v|  v} %> 
+          <p class="hide"><span class= 'font_size '>Device Search </span>  -  The Devise that had the most search <%=value_devise[0] %>  </p>
+          
+         
+          <h1 class="Count_Devises odometer hide" align='center'><%= value_devise[1]%></h1>
+          
      
-      <h1 class="Count_Devises odometer hide" align='center'><%= value_devise[1]%></h1>
-      
-
       <script type="text/javascript">
         
         $('.Count').each(function () 

@@ -13,7 +13,7 @@
 </div>
 <% if current_user.admin.blank? %>
 
-
+    <div class = "table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -69,6 +69,7 @@
                   <td><%= @average[2] %>%</td> 
         </tbody>
       </table>
+    </div>
 <% else %>
 <!--        ////////////////////// Admin Section ////////////////////////////       -->
   <%= render :partial => 'searchform' %>
