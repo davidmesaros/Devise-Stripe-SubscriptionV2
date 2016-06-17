@@ -165,23 +165,23 @@
       <br>
       <br>
       
-          <p><span class= 'font_size'>Daily Clicks</span>  - People that have clicked on to your Ad and went to your website  </p>
+          <p><span class= 'font_size'>Daily Clicks</span>  - The Number of people that have clicked on to your Ad and went to your website  </p>
           <h1 class="Count odometer" align='center'><%= @dashboard.clicks.to_i %></h1>
           <br>
           <br>
-          <p class ="hide" ><span class= 'font_size'>Daily Searches</span>  - Number of Searches on Goolge for your Key Product or services  </p>
+          <p class ="hide" ><span class= 'font_size'>Daily Searches</span>  - Number of Searches for your Key Product or services on Goolge   </p>
           <h1 class="Count_Searches odometer hide" align='center'><%= @dashboard.searches.to_i %></h1>
           <br>
           <br>
-          <% devise = {'smartphones' => @dashboard.smartphones, 
-                      'tablets' => @dashboard.tablets,
-                      'computers' => @dashboard.computers } %>
+          <% devise = {'Smartphones' => @dashboard.smartphones, 
+                      'Tablets' => @dashboard.tablets,
+                      'Computer Desktop' => @dashboard.computers } %>
 
           <% value_devise = devise.max_by{|k,v|  v} %> 
-          <p class="hide"><span class= 'font_size '>Device Search </span>  -  The Devise that had the most search <%=value_devise[0] %>  </p>
-          
+          <% net_num_devise = (@dashboard.searches *  value_devise[1]/100) %>
+          <p class="hide"><span class= 'font_size '>Device Search </span>  -  The Devise use by most people today to search for your product/service is : <%= value_devise[0] %>  
          
-          <h1 class="Count_Devises odometer hide" align='center'><%= value_devise[1]%></h1>
+          <h1 class="Count_Devises odometer hide" align='center'><%= net_num_devise %></h1>
           
      
       <script type="text/javascript">

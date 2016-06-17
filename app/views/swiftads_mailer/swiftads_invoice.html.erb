@@ -7,7 +7,7 @@
     <div style="height:200px; weight:200px">
     <%=  image_tag 'swiftsl.png' %>
     </div>
-    <h3> Tax Invoice for: <%= @website %>  for - <%= Date.today %></h3>
+    <h3> Tax Invoice for: <%= @website %> - <%= Date.today %></h3>
     <h4> To: <%= @user.email %> </h4>
      <table class="table table-striped">
           <thead>
@@ -30,7 +30,7 @@
           <tbody>
               <tr>
                 
-                <td height="50">Google Ads</td>
+                <td height="50">Google Ads and Service Fee</td>
                 <td> </td>
                 <br>
                 <td height="50">Google Advertising - Monthly</td>
