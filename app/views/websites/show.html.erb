@@ -12,14 +12,14 @@
           <h2><dd><%= @website.name %></dd></h2>
           <h4><dt><strong><%= model_class.human_attribute_name(:product) %>:</strong></dt></h4>
           <h4><dd><%= @website.product %></dd></h4>
-            <% if @website.product1.present? %>
+           <!--  <% if @website.product1.present? %>
               <h4><dt><strong><%= model_class.human_attribute_name(:product1) %>:</strong></dt></h4>
               <h4><dd><%= @website.product1 %></dd></h4>
             <% end %>
             <% if @website.product2.present? %>
               <h4><dt><strong><%= model_class.human_attribute_name(:product2)%>:</strong></dt></h4>
               <h4><dd><%= @website.product2 %></dd></h4>
-              <% end %>
+            <% end %> -->
 
           <% if current_user.admin.present? %>
               <h4><dt><strong><%= model_class.human_attribute_name(:subscribed) %></strong></dt></h4>
@@ -46,8 +46,10 @@
           <% else %>
             <% @website.advertises.each do |website| %>
               <% if @website.advertising.present? && @website.subscribed.blank?%>
-              <p>Your Google Ad is ready to go LIVE !!</p>
-              <%= website.description %>
+              <p>Your Google Ad is ready to go LIVE !!
+               Activate your Ad NOW so Potential Customer can find you on Google </p>
+
+              [<%= website.description %>]
               <% else %> 
               <p>Your Google Ad is NOW LIVE</p>
               <%= website.description %>
@@ -103,6 +105,9 @@
   
   <%= link_to 'Advertises List', advertises_path, :class => 'btn btn-default' if current_user.admin.present?  %>
   <%= link_to 'Users List ', users_path, :class => 'btn btn-warning'  if current_user.admin.present? %>
+
+  <%= link_to 'DashBoard ', dashboard_path(@website), :class => 'btn btn-primary'  if current_user.admin.present? and @website.dashboards.present? and @website.date_subscribed.present? %>
+  
 <p>
 <br>
 <% content_for :footer do %>

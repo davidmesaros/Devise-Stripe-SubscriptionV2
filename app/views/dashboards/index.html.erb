@@ -50,7 +50,8 @@
                 
                 <% @cost = 0 %>
                   <% total_cost.each { |a| @cost +=a } %>
-                <td>$<%=  dashboard.budget - @cost %></td>
+                  <% remaining_bal = dashboard.budget - @cost %>
+                <td>$<%=  remaining_bal %></td>
                
                 
                

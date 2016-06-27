@@ -25,7 +25,7 @@ class SwiftadsMailer < ApplicationMailer
     @user = user
     @website = website
     @stripeid = stripeid
-    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Welcome to Swiftads')
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Confirmation of Payment - Swiftads')
     
   end
 
@@ -40,7 +40,7 @@ class SwiftadsMailer < ApplicationMailer
   def swiftads_invoice(user, website, stripeid)
     @user = user
     @website = website
-    @@stripeid = stripeid
+    @stripeid = stripeid
     mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Tax Invoice - Swiftads')
   end
 
@@ -54,5 +54,21 @@ class SwiftadsMailer < ApplicationMailer
     @user = user
     @website = website
     mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Swiftads Dashboard Update')
+  end
+
+  def swiftads_invoice_refund(user, website, stripeid, balance)
+    @user = user
+    @website = website
+    @stripeid = stripeid
+    @balance = balance
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Tax Invoice - Refund - Swiftads')
+  end
+
+   def swiftads_invoice_cancel_refund(user, website, stripeid, balance)
+    @user = user
+    @website = website
+    @stripeid = stripeid
+    @balance = balance
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Tax Invoice - Refund - Swiftads')
   end
 end

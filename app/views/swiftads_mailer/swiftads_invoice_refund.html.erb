@@ -4,9 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h3> Tax Invoice for: <%= @website %> - <%= Date.today %> to <%= Date.today + 1.month %> </h3>
-    <h4> To: <%= @user.email %> </h4>
-     <p> User ID : <%= @stripeid %>
+    <h3> Refund Tax Invoice for: <%= @website %> - <%= Date.today %></h3>
+    <hd> To: <%= @user.email %> </h4>
+      <p> User ID : <%= @stripeid %>
       </p>
     <p>
     <table class="table table-striped">
@@ -23,6 +23,8 @@
               <th> </th>
               <th> </th>
               <th>Paid</th>
+              <br>
+              <th>Refunded</th>
               <br>
               
             </tr>
@@ -42,9 +44,17 @@
                 <td> </td>
                 <td height="50">$375</td>
                 <br>
+                <td height="50">$<%= @balance %></td>
+                <br>
                 
           </tbody>
     </table>
+    </p>
+    <p>
+      Please note: it will take 5 - 10 workings days for the refund to be deposited back into your Credit Card.
+    </p>
+    <p>
+      Sorry to see you go. We do hope to see you back again soon.
     </p>
     <p>
       <br>

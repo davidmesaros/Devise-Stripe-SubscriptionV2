@@ -23,6 +23,7 @@ class DashboardsController < ApplicationController
     @dashboard = Dashboard.find_by(:website_id => params[:id]) || Dashboard.find(params[:id])# this show gets the params when there is not ID ( websites/index => dashbaord_new)
     # @dashboard = Dashboard.find(params[:id]) if params[:id].blank? # gets ID when the params is created with an ID
     find_params_for_data_dashboard # calls @dashboard params to Application
+  
   end
 
   # GET /dashboards/new

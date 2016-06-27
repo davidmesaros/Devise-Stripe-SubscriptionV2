@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   helper_method :current_websites,:logged_in?, :dashboard_params, 
                 :dashboard_advertise, :dashboard_data, :dashboard_data_finder, 
-                :find_params_for_data_dashboard, :delinquent, :mailer_array, :renew_date
+                :find_params_for_data_dashboard, :delinquent, :mailer_array, :renew_date,
+                :refund_account
 
             
           
@@ -207,7 +208,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def mailer_array
+  def mailer_array # counts the length of el in dashbaord thus to generate letters to new clients
     @website = Website.find(@dashboard.website_id)
       if @dashboard.data_dashboards.length < 4
         SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
@@ -216,11 +217,13 @@ class ApplicationController < ActionController::Base
       end
   end
 
-  def renew_date
+  # reset the start date for subscription, issues and invoice..
+  def renew_date 
     @websites.each do |web|
       if web.end_date.present?
         end_date = web.end_date + 1.day
         start_date = web.date_subscribed
+        
           if end_date == Date.today
             web.date_subscribed = Date.today 
             web.end_date = Date.today + 1.month
@@ -230,6 +233,28 @@ class ApplicationController < ActionController::Base
         end
       end
   end
+  # after 1 month any balance left over Google Ad, is refunded back and subscription start again
+  def refund_account(balance) #=> dashboard#show
+     
+    @website = Website.find(@dashboard.website_id)
+    if balance > 5 && Date.today == @website.end_date && @website.days_left == nil
+      SwiftadsMailer.swiftads_invoice_refund(@website.user, @website.name, @website.stripeid, balance).deliver_now
+      @website.days_left = 0
+      @website.save
+    elsif @website.days_left == 0 && @website.date_subscribed + 1.day == Date.today
+      @website.days_left = ''
+      @website.save
+    elsif @website.subscribed == false && @website.stripeid.present? # calculate refund if cancelled subscription
+      days_in_monthly = (@website.end_date.to_date - @website.date_subscribed.to_date)
+      days_left =  ( @website.end_date.to_date - Date.today.to_date )
+      cancel_balance = days_left.to_i / days_in_monthly.to_i * 75
+      total_balance = balance + cancel_balance
+      SwiftadsMailer.swiftads_invoice_cancel_refund(@website.user, @website.name, @website.stripeid, total_balance).deliver_now
+      @website.stripeid
+    end
+    
+  end
+
 
   
 
