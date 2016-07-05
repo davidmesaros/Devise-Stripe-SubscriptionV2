@@ -7,7 +7,7 @@ class DataDashboardsController < ApplicationController
     @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
     @data_dashboards = DataDashboard.where(created_at: 8.days.ago..Time.now) if current_user.admin.blank?
 
-    # destroy_data # destroy data after 1 month...
+    destroy_data # destroy data after 1 month...
 
     total_dashboards # the method is called in the application => cal the total and average 
     

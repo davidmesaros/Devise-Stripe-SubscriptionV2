@@ -32,23 +32,24 @@
                 <h4><dd><%= @website.days_left = days_left %>Day's</dd><h4>
 
               <h4><dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt></h4>
-              <h4><dd><%= @website.user_id %></dd></h4>
+              <h4><dd><%= link_to @website.user_id, user_path(@website.user_id) %></dd></h4>
           <% end %>
           <br>
           <br>
           <% unless @website.advertising == true  %> 
-            Thank you for adding your Key Products /Servicesd. We will now work on creating 
-            Your Google Ad that will generate new leads to your Business. We will send through an Email notification in the next 24 hours to let you know that your Google Ad is ready to activate.
+            Thank you for adding  your key Product or Service and Website url. Swiftads will now go to work and create an effective online advertisement that will increase your online presence and ranking .We will send through an Email notification in the next 24 hours to let you know that your Google Ad is ready.
             </br>
             </br> 
-            Please note: that you will need to activate your Ad HERE to start advertising on Google...<br>
+            Please note: You will need to activate your Subscription here before your new Advertsiment goes live on Google Search<br>
             We look forward to seeing you back here Soon :)
           <% else %>
             <% @website.advertises.each do |website| %>
               <% if @website.advertising.present? && @website.subscribed.blank?%>
               <p>Your Google Ad is ready to go LIVE !!
-               Activate your Ad NOW so Potential Customer can find you on Google </p>
-
+               Sign Up to our Monthly Plan to start generating new leads to your Business.</p>
+              <br>
+              Your Advertsiment
+              <br>
               [<%= website.description %>]
               <% else %> 
               <p>Your Google Ad is NOW LIVE</p>
@@ -65,7 +66,7 @@
             <%= link_to " DashBoard " ,new_subscriber_path(:website => @website.id),
                 :class => 'btn btn-primary' %>
           <% else %>
-            <%= link_to " Activate NOW" ,new_subscriber_path(:website => @website.id),
+            <%= link_to " Sign Up" ,new_subscriber_path(:website => @website.id),
                 :class => 'btn btn-primary' if @website.advertising == true %>
 
               <% if current_user.admin.present? %>

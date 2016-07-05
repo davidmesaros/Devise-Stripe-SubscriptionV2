@@ -209,15 +209,33 @@ class ApplicationController < ActionController::Base
   end
 
   def mailer_array # counts the length of el in dashbaord thus to generate letters to new clients
+    #mail_array is called on the dashboard#update controller
     @website = Website.find(@dashboard.website_id)
-      if @dashboard.data_dashboards.length < 4
-        SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-      elsif @dashboard.data_dashboards.length == 4
-        SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-      end
+    
+    end_date = @website.date_subscribed + 4.days
+      if  Date.today < end_date
+        d =  @website.date_subscribed + 4.days 
+        if !d.saturday? || !d.sunday?
+          SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+        end
+      end  
+        # if subscribed on tue and last due on Suturday
+        d =  @website.date_subscribed + 4.days
+        if d.saturday? and Date.today < @website.date_subscribed + 6.days 
+          
+          if Date.today == @website.date_subscribed + 6.days 
+                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+          end
+        # if subscribed on thursday and last day is on sunday
+        elsif d.sunday? and @website.date_subscribed + 5.days
+            SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+       
+        end
+            
   end
 
   # reset the start date for subscription, issues and invoice..
+  # renew_date gets called on the Website#index controller
   def renew_date 
     @websites.each do |web|
       if web.end_date.present?
@@ -252,6 +270,11 @@ class ApplicationController < ActionController::Base
       SwiftadsMailer.swiftads_invoice_cancel_refund(@website.user, @website.name, @website.stripeid, total_balance).deliver_now
       @website.stripeid
     end
+
+    def destroy_data
+       @data_dashboards = DataDashboard.where(['created_at < ?', 1.month.ago]).destroy_all
+    end
+
     
   end
 
@@ -260,11 +283,6 @@ class ApplicationController < ActionController::Base
 
   #------------------------------------------------------->
   # ==> do this a later date...
-
-  # def destroy_data
-       # @data_dashboards = DataDashboard.where(['created_at > ?', 1.month.ago]).destroy_all
-  # end
-
 
   # def bal_bugdet  ==> do this a later date... for Data_Dashboard controller.. 
     

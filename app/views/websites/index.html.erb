@@ -16,8 +16,8 @@
         <th> Ad ready on Google </th>
           <% if current_user.admin.blank? %>
             <th><%= model_class.human_attribute_name(:product) %></th>
-            <th><%= model_class.human_attribute_name(:product1) %></th>
-            <th><%= model_class.human_attribute_name(:product2) %></th>
+           <!--  <th><%= model_class.human_attribute_name(:product1) %></th>
+            <th><%= model_class.human_attribute_name(:product2) %></th> -->
                     
           <% else %>
             <th><%= model_class.human_attribute_name(:subscribed) %></th>
@@ -63,15 +63,15 @@
             <% end %>
             </td>
             <td><%= website.product %></td>
-            <td><%= website.product1 %></td>
-            <td><%= website.product2 %></td>
+            <!-- <td><%= website.product1 %></td>
+            <td><%= website.product2 %></td> -->
              
             
             <td>
             
             
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                          edit_website_path(website), :class => 'btn btn-default btn-xs' if  website.subscribed.blank?%>
+                          edit_website_path(website), :class => 'btn btn-default' if  website.subscribed.blank?%>
               
               <% if website.subscribed.present? %>
                 <%= link_to "Cancel Subscription",
@@ -159,7 +159,7 @@
   </table>
 </div>
 
-<%= link_to "Add Another Website",
+<%= link_to "Add Another Product or Service",
             new_website_path,
             :class => 'btn btn-primary' %>
 <% web_id  = website_[0] %>
@@ -180,7 +180,7 @@
 
 
 <br>
-: Please note: for every new website you activate for Google Ads, the fee is $300 + 25% for each website Ad that goes live
+: Please note: for every new Product or Service you activate for Google Ads, the fee is $300 + 25% for each advertisement that goes live
 <p>
   <br>
   <% content_for :footer do %>
