@@ -211,26 +211,25 @@ class ApplicationController < ActionController::Base
   def mailer_array # counts the length of el in dashbaord thus to generate letters to new clients
     #mail_array is called on the dashboard#update controller
     @website = Website.find(@dashboard.website_id)
-    
+    d =  @website.date_subscribed + 4.days  
     end_date = @website.date_subscribed + 4.days
       if  Date.today < end_date
-        d =  @website.date_subscribed + 4.days 
         if !d.saturday? || !d.sunday?
           SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
         end
-      end  
-        # if subscribed on tue and last due on Suturday
-        d =  @website.date_subscribed + 4.days
-        if d.saturday? and Date.today < @website.date_subscribed + 6.days 
-          
-          if Date.today == @website.date_subscribed + 6.days 
-                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-          end
-        # if subscribed on thursday and last day is on sunday
-        elsif d.sunday? and @website.date_subscribed + 5.days
-            SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-       
+      elsif Date.today == end_date # last Dashbasboard falls during the week day
+        if !d.saturday? || !d.sunday?
+          SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
         end
+      elsif d.saturday? # Tue Subscribed => last day is Saturday => email out on Monday
+        if Date.today == @website.date_subscribed + 6.days 
+                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+        end 
+      elsif d.sunday? #wed Subscribed => last day is Sun => email out on Monday
+        if Date.today == @website.date_subscribed + 5.days 
+                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+        end 
+      end  
             
   end
 
