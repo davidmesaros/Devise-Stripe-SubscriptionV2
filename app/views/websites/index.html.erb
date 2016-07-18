@@ -14,18 +14,18 @@
         <th><%= model_class.human_attribute_name(:id) %></th>
         <th><%= model_class.human_attribute_name(:name) %></th>
         <th> Ad ready on Google </th>
-          
+          <% if current_user.admin.blank? %>
             <th><%= model_class.human_attribute_name(:product) %></th>
            <!--  <th><%= model_class.human_attribute_name(:product1) %></th>
             <th><%= model_class.human_attribute_name(:product2) %></th> -->
-                    
-          
+            
+          <% else %>         
             <th><%= model_class.human_attribute_name(:subscribed) %></th>
             <th><%= model_class.human_attribute_name(:days_left) %></th>
             <th><%= model_class.human_attribute_name(:user_id) %></th>
             <th><%= model_class.human_attribute_name(:date_subscribed) %></th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
-        
+          <% end %>
 
       </tr>
     </thead>

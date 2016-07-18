@@ -273,6 +273,7 @@ class ApplicationController < ActionController::Base
   end
 
   def destroy_data
+    # destroy data 1 month ago from last created_at
     delete_data = DataDashboard.where(['created_at < ?', 1.month.ago])
     delete_data.destroy_all
   end
