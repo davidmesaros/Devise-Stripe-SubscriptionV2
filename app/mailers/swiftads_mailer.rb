@@ -71,4 +71,11 @@ class SwiftadsMailer < ApplicationMailer
     @balance = balance
     mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Tax Invoice - Refund - Swiftads')
   end
+
+  def trial_period(user, website, stripeid)
+    @user = user
+    @website = website
+    @stripeid = stripeid
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Trail Period - Swiftads')
+  end
 end

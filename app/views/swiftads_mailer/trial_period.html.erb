@@ -6,23 +6,27 @@
   <body>
     <h1>Hi <%= @user.email %></h1>
     <p>
-      Welcome to Swiftads. Your Payment was Successfull
+      Welcome to Swiftads. Your Payment Details was Successfull 
+      <br>
+      <br>
+      This is your Trails Period, <br>
+      Please Note: The Trail Period will end <%= Date.today + 30.days %>, and your monthly payments will commence on .<br>
+      <%= Date.today + 1.month %>.
+
     </p>
     <p>
       Your Ad for your website "<%= @website %>" will be displayed shotly to potential customers searching on Google
     </p>
-     <!-- <p>
+     <p>
        What we do behind the scence...
        <br>
         These first few weeks are crucial and play a big part in the setting your business up for success. During this time, Swiftads will crunching the data from Advertsiment and develop a unique individualised code that will improve your website's online presence and generate quality leads for your business.
-    </p> -->
+    </p>
     <p>
       You will be notified by email once the results of your ad is ready to view on your Dashboard. 
     </p>
     <p>
-      Please note: <br>
-      A Tax Inovice confirming your recent payment will be email to you shortly unless its during the trail period. <br>
-      Also please try not to click into your Advertisment if you see it on Google Search, this will be wasted cost to yourself if you click into your website.
+     
     </p>
     <p>
       Kind regards,

@@ -14,7 +14,7 @@ class SubscribersController < ApplicationController
       begin
         customer = Stripe::Customer.create(
             card: token,
-            plan: 33888,
+            plan: 33889,
             email: current_user.email
             )
 
@@ -25,13 +25,15 @@ class SubscribersController < ApplicationController
         @@website.subscribed = true
         @@website.date_subscribed = Date.today
         @@website.save  
+
+
+        SwiftadsMailer.trial_period(@@website.user, @@website.name, @@website.stripeid).deliver_now
         
         SwiftadsMailer.new_subscription(@@website.user, @@website.name, @@website.stripeid).deliver_now
 
-        SwiftadsMailer.swiftads_invoice(@@website.user, @@website.name, @@website.stripeid).deliver_now
         
 
-        flash[:notice] = "Your Payment was successful, an email will be sent out to you shortly confirming your payment"
+        flash[:notice] = "Your Payment Details was successful, an email will be sent out to you shortly confirming your transaction"
 
         rescue Stripe::CardError => e
         flash[:danger] = 'Your Credit Card was decline. Please check your Credit Card Details and try again. If it Fails one more time
