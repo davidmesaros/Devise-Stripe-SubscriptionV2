@@ -37,11 +37,17 @@
           <br>
           <br>
           <% unless @website.advertising == true  %> 
-            Thank you for adding  your key Product or Service and Website url. Swiftads will now go to work and create an effective online advertisement that will increase your online presence and ranking .We will send through an Email notification in the next 24 hours to let you know that your Google Ad is ready.
+            Thank you for adding  your Website url and Your Key Product or Service. Swiftads will now go to work and create an effective online advertisement that will increase your online presence and ranking .We will send through an Email notification in the next 24 hours to let you know that your Google Ad is ready.
             </br>
             </br> 
-            Please note: You will need to activate your Subscription here before your new Advertsiment goes live on Google Search<br>
-            We look forward to seeing you back here Soon :)
+                <% if @website.subscribed.blank? %>
+                   You will need to activate your Subscription here before your new Advertsiment goes live on Google Search<br>
+                  </br>
+                  </br> 
+                  <%= link_to "Sign Up to Monthly Plan", new_subscriber_path(:website => @website.id), class:  'btn btn-primary'%>
+                <% else %>
+                  <%= link_to "Home", root_path, class:  'btn btn-primary'%>
+                <% end %>
           <% else %>
             <% @website.advertises.each do |website| %>
               <% if @website.advertising.present? && @website.subscribed.blank?%>

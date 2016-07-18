@@ -4,15 +4,18 @@ class DataDashboardsController < ApplicationController
   # GET /data_dashboards
   # GET /data_dashboards.json
   def index
+    
+    @data_dashboards = DataDashboard.where(created_at: 1.month.ago..Time.now) 
     @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
-    @data_dashboards = DataDashboard.where(created_at: 8.days.ago..Time.now) if current_user.admin.blank?
 
     destroy_data # destroy data after 1 month...
 
     total_dashboards # the method is called in the application => cal the total and average 
     
     dashboard_data_finder## the method is called in the application 
-    
+     
+    # @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
+    # will_paginate => needs to be called last Very Important
    
     # bal_bugdet # working to find bal left over from the budget.
     

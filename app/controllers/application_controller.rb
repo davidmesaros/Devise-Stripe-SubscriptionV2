@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_websites,:logged_in?, :dashboard_params, 
                 :dashboard_advertise, :dashboard_data, :dashboard_data_finder, 
                 :find_params_for_data_dashboard, :delinquent, :mailer_array, :renew_date,
-                :refund_account
+                :refund_account, :destroy_data
 
             
           
@@ -90,7 +90,6 @@ class ApplicationController < ActionController::Base
     @data_tablets = []
     @data_computers = []
     # @data_dashboards = DataDashboard.where(dashboard_id:18)
-
     @data_dashboards.each do |data|
       
       
@@ -270,39 +269,14 @@ class ApplicationController < ActionController::Base
       @website.stripeid
     end
 
-    def destroy_data
-       @data_dashboards = DataDashboard.where(['created_at < ?', 1.month.ago]).destroy_all
-    end
-
     
   end
 
+  def destroy_data
+    delete_data = DataDashboard.where(['created_at < ?', 1.month.ago])
+    delete_data.destroy_all
+  end
 
-  
-
-  #------------------------------------------------------->
-  # ==> do this a later date...
-
-  # def bal_bugdet  ==> do this a later date... for Data_Dashboard controller.. 
-    
-  #   data_budget = []
-  #   @data_dashboards.each_with_index do|data, index|
-      
-  #     if index == 0 
-  #       data.budget = 300 
-  #       data_budget << data.budget if index == 0
-  #     end
-  #   end
-  #   @data_dashboards.each do |dash|
-  #      data_index = data_budget[0] - dash.cost
-  #     data_budget << data_index
-  #     last = data_budget.pop
-
-  #   end
-
-    
-  # end
-  #------------------------------------------------------->
 
 
 end

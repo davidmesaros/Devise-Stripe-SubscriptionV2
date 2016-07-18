@@ -31,7 +31,7 @@ class SubscribersController < ApplicationController
         SwiftadsMailer.swiftads_invoice(@@website.user, @@website.name, @@website.stripeid).deliver_now
         
 
-        flash[:notice] = "Your Payment was successful, an email will be sent shortly confirming your payment"
+        flash[:notice] = "Your Payment was successful, an email will be sent out to you shortly confirming your payment"
 
         rescue Stripe::CardError => e
         flash[:danger] = 'Your Credit Card was decline. Please check your Credit Card Details and try again. If it Fails one more time
