@@ -14,7 +14,7 @@ class DashboardsController < ApplicationController
     # this needs to be the last line as it is double instance to carry below to next method
     # @@website = params[:website]
     
-
+    destroy_data # destroy data after 1 month...data_dashboards...
   end
 
   # GET /dashboards/1

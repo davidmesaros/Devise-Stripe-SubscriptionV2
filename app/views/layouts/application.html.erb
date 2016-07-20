@@ -82,6 +82,8 @@
           <div class="well sidebar-nav">
             <h3><%= "Hello Admin" if logged_in? and current_user.admin.present? %></h3>
             <h3>Swiftads : Notes</h3>
+            <%= "Important Notes will be displayed here once you login to Swiftads" if !logged_in? %>
+            <%= "Welcome to Swiftads" if logged_in? and current_user.present? %>
             <%= yield :footer %>
             
             <ul class="nav nav-list">
