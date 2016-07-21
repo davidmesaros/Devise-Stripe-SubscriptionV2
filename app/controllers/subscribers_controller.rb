@@ -26,8 +26,8 @@ class SubscribersController < ApplicationController
         @@website.date_subscribed = Date.today
         @@website.save  
 
-
-        SwiftadsMailer.trial_period(@@website.user, @@website.name, @@website.stripeid).deliver_now
+        SwiftadsMailer.swiftads_invoice(@@website.user, @@website.name, @@website.stripeid)).deliver_now
+        # SwiftadsMailer.trial_period(@@website.user, @@website.name, @@website.stripeid).deliver_now
         
         SwiftadsMailer.new_subscription(@@website.user, @@website.name, @@website.stripeid).deliver_now
 

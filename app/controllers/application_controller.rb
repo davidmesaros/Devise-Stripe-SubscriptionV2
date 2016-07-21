@@ -187,10 +187,8 @@ class ApplicationController < ActionController::Base
                   value  = value /total.to_f  
                   
                   value_floated = value * 100 
-                  x = 0
-                  if value_floated.to_s[".5"] and x = 0
+                  if value_floated.to_s[".5"]
                     @average << value_floated.floor if !value_floated.nan?
-                    x = 1
                   else
                     @average << value_floated.round(0) if !value_floated.nan?
                   end
