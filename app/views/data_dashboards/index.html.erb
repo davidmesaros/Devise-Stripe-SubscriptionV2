@@ -83,7 +83,7 @@
             <th><%= model_class.human_attribute_name(:clicks) %></th>
             <th><%= model_class.human_attribute_name(:searches) %></th>
             <th><%= model_class.human_attribute_name(:cost) %></th>
-            <th><%= model_class.human_attribute_name(:budget) %></th>
+            <!-- <th><%= model_class.human_attribute_name(:budget) %></th> -->
             <th><%= model_class.human_attribute_name(:smartphones) %></th>
             <th><%= model_class.human_attribute_name(:tablets) %></th>
             <th><%= model_class.human_attribute_name(:computers) %></th>
@@ -107,7 +107,7 @@
                     <td><%= data_dashboard.clicks %></td>
                     <td><%= data_dashboard.searches %></td>
                     <td>$<%= data_dashboard.cost %></td>
-                    <td>$<%= data_dashboard.budget %></td>
+                   <!--  <td>$<%= data_dashboard.budget %></td> -->
                     
                     <td><%= data_dashboard.smartphones %>%</td>
                     <td><%= data_dashboard.tablets %>%</td>
@@ -133,10 +133,10 @@
                   <td><%= "#{@clicks}" %></td>
                   <td><%= "#{@searches}" %></td> 
                   <td>$<%= "#{@cost}" %></td> 
-                  <td>$<%= "#{@budget}" %></td> 
-                  <td><%= "#{@smartphones}" %>%</td> 
-                  <td><%= "#{@tablets}" %>%</td> 
-                  <td><%= "#{@computers}" %>%</td> 
+                  <!-- <td><%= "#{@budget}" %></td>  -->
+                  <td><%= @average[0] %>%</td> 
+                  <td><%= @average[1] %>%</td> 
+                  <td><%= @average[2] %>%</td> 
         </tbody>
       </table>
 

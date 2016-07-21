@@ -186,8 +186,13 @@ class ApplicationController < ActionController::Base
     hash.each do | key, value |
                   value  = value /total.to_f  
                   
-                   value_floated = value * 100 
-                   @average << value_floated.round(0) if !value_floated.nan?
+                  value_floated = value * 100 
+                  if value_floated.to_s[".5"]
+                    
+                    @average << value_floated.floor if !value_floated.nan?
+                  else
+                    @average << value_floated.round(0) if !value_floated.nan?
+                  end
 
     end
   end
