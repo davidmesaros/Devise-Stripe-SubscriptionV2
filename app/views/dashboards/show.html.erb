@@ -70,7 +70,7 @@
             
 <%= link_to "Home", root_path, :class => 'btn btn-default'  %>
 
-<%= link_to "Your Google Ad", advertise_path(dashboard_advertise), :class => 'btn btn-default'  %>
+<%= link_to "Your Google Ad", advertise_path(dashboard_advertise), :class => 'btn btn-default'  if dashboard_advertise.present? %>
 
 <%= link_to 'Website Details', websites_path, class: "btn btn-primary" %>
 
