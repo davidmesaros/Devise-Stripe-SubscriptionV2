@@ -73,8 +73,9 @@
     </div>
 <% else %>
 <!--        ////////////////////// Admin Section ////////////////////////////       -->
-  <%= render :partial => 'searchform' %>
 
+  <%= render :partial => 'searchform' %>
+    <div class = "table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -139,8 +140,9 @@
                   <td><%= @average[2] %>%</td> 
         </tbody>
       </table>
-
+    </div>
 <% end %>
+
 
 <% if current_user.admin.present? %>
   <%= link_to "Dashboards",

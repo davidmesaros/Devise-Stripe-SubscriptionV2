@@ -8,75 +8,77 @@
           <%= will_paginate if current_user.admin.present? %>
 
         </div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th><%= model_class.human_attribute_name(:id) %></th>
-              <th><%= model_class.human_attribute_name(:calls) %></th>
-              <th><%= model_class.human_attribute_name(:clicks) %></th>
-              <th><%= model_class.human_attribute_name(:searches) %></th>
-              <th><%= model_class.human_attribute_name(:cost) %></th>
-              <th>Balance</th>
-              <th><%= model_class.human_attribute_name(:smartphones) %></th>
-              <th><%= model_class.human_attribute_name(:tablets) %></th>
-              <th><%= model_class.human_attribute_name(:computers) %></th>
-              <th> Web Name</th>
-              <th><%= model_class.human_attribute_name(:created_at) %></th>
-              <th><%=t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @dashboards.each do |dashboard| %>
+        <div class = "table-responsive">
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td><%= link_to dashboard.id, dashboard_path(dashboard) %></td>
-                <td><%= dashboard.calls %></td>
-                <td><%= dashboard.clicks %></td>
-                <td><%= dashboard.searches %></td>
-                <td>$<%= dashboard.cost %></td>
+                <th><%= model_class.human_attribute_name(:id) %></th>
+                <th><%= model_class.human_attribute_name(:calls) %></th>
+                <th><%= model_class.human_attribute_name(:clicks) %></th>
+                <th><%= model_class.human_attribute_name(:searches) %></th>
+                <th><%= model_class.human_attribute_name(:cost) %></th>
+                <th>Balance</th>
+                <th><%= model_class.human_attribute_name(:smartphones) %></th>
+                <th><%= model_class.human_attribute_name(:tablets) %></th>
+                <th><%= model_class.human_attribute_name(:computers) %></th>
+                <th> Web Name</th>
+                <th><%= model_class.human_attribute_name(:created_at) %></th>
+                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @dashboards.each do |dashboard| %>
+                <tr>
+                  <td><%= link_to dashboard.id, dashboard_path(dashboard) %></td>
+                  <td><%= dashboard.calls %></td>
+                  <td><%= dashboard.clicks %></td>
+                  <td><%= dashboard.searches %></td>
+                  <td>$<%= dashboard.cost %></td>
 
 
-                <% website = Website.find(dashboard.website_id) %>
-                <% total_cost = [] %>
-                <% dashboard.data_dashboards.each do|num| %>
-                  <% if website.date_subscribed != nil %>
-                    <% if  website.date_subscribed < num.updated_at %>
-                      <% total_cost << num.cost if  website.date_subscribed < num.updated_at %>
+                  <% website = Website.find(dashboard.website_id) %>
+                  <% total_cost = [] %>
+                  <% dashboard.data_dashboards.each do|num| %>
+                    <% if website.date_subscribed != nil %>
+                      <% if  website.date_subscribed < num.updated_at %>
+                        <% total_cost << num.cost if  website.date_subscribed < num.updated_at %>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
 
 
-               
-                
-                <% @cost = 0 %>
-                  <% total_cost.each { |a| @cost +=a } %>
-                  <% remaining_bal = dashboard.budget - @cost %>
-                <td>$<%=  remaining_bal %></td>
-               
-                
-               
-                
-                <td><%= dashboard.smartphones %>%</td>
-                <td><%= dashboard.tablets %>%</td>
-                <td><%= dashboard.computers %>%</td>
-    
-                <% website_name = Website.find_by(:id => dashboard.website_id) %> 
-                <% website_name.name %>
-                <td><%= website_name.name %> </td>
-                <td><%= dashboard.created_at.to_s(:due_date) %></td>
-                <td>
-                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                              edit_dashboard_path(dashboard), :class => 'btn btn-default btn-xs' %>
-                  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                              dashboard_path(dashboard),
-                              :method => :delete,
-                              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                              :class => 'btn btn-xs btn-danger' %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                 
+                  
+                  <% @cost = 0 %>
+                    <% total_cost.each { |a| @cost +=a } %>
+                    <% remaining_bal = dashboard.budget - @cost %>
+                  <td>$<%=  remaining_bal %></td>
+                 
+                  
+                 
+                  
+                  <td><%= dashboard.smartphones %>%</td>
+                  <td><%= dashboard.tablets %>%</td>
+                  <td><%= dashboard.computers %>%</td>
+      
+                  <% website_name = Website.find_by(:id => dashboard.website_id) %> 
+                  <% website_name.name %>
+                  <td><%= website_name.name %> </td>
+                  <td><%= dashboard.created_at.to_s(:due_date) %></td>
+                  <td>
+                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                edit_dashboard_path(dashboard), :class => 'btn btn-default btn-xs' %>
+                    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                                dashboard_path(dashboard),
+                                :method => :delete,
+                                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                :class => 'btn btn-xs btn-danger' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
 
         
 
