@@ -8,46 +8,48 @@
   <%= will_paginate %>
 
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th> Website Name</th>
-      <th> Website Ad Activited</th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @advertises.each do |advertise| %>
-        <% if advertise.website != nil %>
+<div class = "table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= link_to advertise.id, advertise_path(advertise) %></td>
-        <td><%= advertise.description %></td>
-        <td><%= advertise.website.name  %></td>
-        
-        <td><%= advertise.website.advertising  %></td>
-        <td><%=l advertise.created_at %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_advertise_path(advertise), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      advertise_path(advertise),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-          <% web = Website.find(advertise.website_id) %>
+        <th><%= model_class.human_attribute_name(:id) %></th>
+        <th><%= model_class.human_attribute_name(:description) %></th>
+        <th> Website Name</th>
+        <th> Website Ad Activited</th>
+        <th><%= model_class.human_attribute_name(:created_at) %></th>
 
-          <%= link_to 'Activate Ad', edit_website_path(advertise.website.id), :class => 'btn btn-default btn-xs btn-primary' if web.advertising.blank? %>
-         
-        </td>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
+    </thead>
+    <tbody>
+      <% @advertises.each do |advertise| %>
+          <% if advertise.website != nil %>
+        <tr>
+          <td><%= link_to advertise.id, advertise_path(advertise) %></td>
+          <td><%= advertise.description %></td>
+          <td><%= advertise.website.name  %></td>
+          
+          <td><%= advertise.website.advertising  %></td>
+          <td><%=l advertise.created_at %></td>
+          <td>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_advertise_path(advertise), :class => 'btn btn-default btn-xs' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        advertise_path(advertise),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-xs btn-danger' %>
+            <% web = Website.find(advertise.website_id) %>
+
+            <%= link_to 'Activate Ad', edit_website_path(advertise.website.id), :class => 'btn btn-default btn-xs btn-primary' if web.advertising.blank? %>
+           
+          </td>
+        </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 <div align="center">
 
   <%= will_paginate %>
