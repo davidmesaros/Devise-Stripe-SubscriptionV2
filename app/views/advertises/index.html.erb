@@ -64,45 +64,46 @@
             root_path,
             :class => 'btn btn-warning' if current_user.admin.present? %>  
 
+<div class = "table-responsive">
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+          <th>Website Name</th>
+          <th>Website ID</th>
+          <th>Ad's Activated</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
 
-<table class="table table-striped" >
-  <thead>
-    <tr>
-        <th>Website Name</th>
-        <th>Website ID</th>
-        <th>Ad's Activated</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <!-- current_websites => Website.all -->
+    <% current_websites.each do |website| %>
+      <tr>
+        <% if website.advertising == false %>
+          <td><%= website.name %></td>
+          <td><%= website.id %></td>
+          <td><%= website.advertising %></td>
+          
+          <td>
+            <!-- Here we dig deeper into advertises list 
+                ie find advertise been created but not activated  -->
+          <% website.advertises.each do |advertise| %> 
+          
+                      <%= link_to "Active Ad",
+                      edit_website_path(website),
+                      :class => 'btn btn-primary' if advertise.id.present?  %>
+          <% end %>
 
-    </tr>
-  </thead>
-  <tbody>
-  <!-- current_websites => Website.all -->
-  <% current_websites.each do |website| %>
-    <tr>
-      <% if website.advertising == false %>
-        <td><%= website.name %></td>
-        <td><%= website.id %></td>
-        <td><%= website.advertising %></td>
-        
-        <td>
-          <!-- Here we dig deeper into advertises list 
-              ie find advertise been created but not activated  -->
-        <% website.advertises.each do |advertise| %> 
-        
-                    <%= link_to "Active Ad",
-                    edit_website_path(website),
-                    :class => 'btn btn-primary' if advertise.id.present?  %>
+            <%= link_to "Create Ad",
+                      new_advertise_path(:website_id => website.id),
+                      :class => 'btn btn-primary' if website.advertises.blank? %>
+          </td>
         <% end %>
-
-          <%= link_to "Create Ad",
-                    new_advertise_path(:website_id => website.id),
-                    :class => 'btn btn-primary' if website.advertises.blank? %>
-        </td>
-      <% end %>
-    </tr>
-  <% end %>
-  </tbody>
-
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
   <% content_for :footer do %>
        <% count_ads = [] %>
     <% count_ads_not = [] %>
