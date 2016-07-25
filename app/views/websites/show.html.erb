@@ -121,13 +121,15 @@
   <% unless @website.advertising == true  %> 
   <br>
     Your Ad on Google will be displayed here within the next 24hrs
-       <div class= "stripe_logo">
-                  <br>
-                  Our Online Secure Payment is powered by Stripe.
-                  <br>
-                  <br>
-                  <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
-        </div>
+  <br>
+  <br>
+   <div class= "stripe_logo">
+              <br>
+              Our Online Secure Payment is powered by Stripe.
+              <br>
+              <br>
+              <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+    </div>
   <% else %>
     <% @website.advertises.each do |website| %>
       <% if @website.advertising.present? && @website.subscribed.blank?%>
