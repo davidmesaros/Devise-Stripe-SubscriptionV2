@@ -8,8 +8,8 @@
       <div class= 'panel-body'>
         <table class="table table-striped">
         <dl class="dl-horizontal">
-          <h2><dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt></h2>
-          <h2><dd><%= @website.name %></dd></h2>
+          <h4><dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt></h4>
+          <h4><dd><%= @website.name %></dd></h4>
           <h4><dt><strong><%= model_class.human_attribute_name(:product) %>:</strong></dt></h4>
           <h4><dd><%= @website.product %></dd></h4>
            <!--  <% if @website.product1.present? %>
@@ -120,27 +120,34 @@
 <% content_for :footer do %>
   <% unless @website.advertising == true  %> 
     Your Ad on Google will be displayed here within the next 24hrs
+       <div class= "stripe_logo">
+                  <br>
+                  Our Online Secure Payment is powered by Stripe.
+                  <br>
+                  <br>
+                  <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+        </div>
   <% else %>
     <% @website.advertises.each do |website| %>
       <% if @website.advertising.present? && @website.subscribed.blank?%>
       <p>Your Google Ad is ready ACTIVATE NOW!!</p>
-      <div class= "stripe_logo">
-                <br>
-                Our Online Secure Payment is powered by Stripe.
-                <br>
-                <br>
-                <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
-            </div>
+        <div class= "stripe_logo">
+                  <br>
+                  Our Online Secure Payment is powered by Stripe.
+                  <br>
+                  <br>
+                  <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+        </div>
       <% else %> 
       <p>Your Google Ad is NOW LIVE</p>
-      <%= website.description %>
+      <!--<%= website.description %>-->
        <div class= "stripe_logo">
                 <br>
                 Our Online Secure Payment is powered by Stripe.
                 <br>
                 <br>
                 <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
-            </div>
+        </div>
       <% end %>
     <% end %>
 
