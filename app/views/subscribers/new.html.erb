@@ -8,5 +8,16 @@
       </div>
     </div>
   </div>
+  <% content_for :footer do %>
+  <br>
+  <div class= "stripe_logo">
+     <br>
+     <br>
+    <p> Our Online Secure Payment is powered by Stripe.</p>  
+    <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+
+  </div> 
+      
+<% end %>
   
 </div>

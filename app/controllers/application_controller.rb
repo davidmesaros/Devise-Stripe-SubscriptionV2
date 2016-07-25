@@ -213,27 +213,40 @@ class ApplicationController < ActionController::Base
 
   def mailer_array # counts the length of el in dashbaord thus to generate letters to new clients
     #mail_array is called on the dashboard#update controller
+    # @website = Website.find(@dashboard.website_id)
+    # d =  @website.date_subscribed + 4.days  
+    # end_date = @website.date_subscribed + 4.days
+    #   if  Date.today < end_date
+    #     if !d.saturday? || !d.sunday?
+    #       SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+    #     end
+    #   elsif Date.today == end_date # last Dashbasboard falls during the week day
+    #     if !d.saturday? || !d.sunday?
+    #       SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+    #     end
+    #   elsif d.saturday? # Tue Subscribed => last day is Saturday => email out on Monday
+    #     if Date.today == @website.date_subscribed + 6.days 
+    #             SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+    #     end 
+    #   elsif d.sunday? #wed Subscribed => last day is Sun => email out on Monday
+    #     if Date.today == @website.date_subscribed + 5.days 
+    #             SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
+    #     end 
+    #   end  
     @website = Website.find(@dashboard.website_id)
-    d =  @website.date_subscribed + 4.days  
-    end_date = @website.date_subscribed + 4.days
-      if  Date.today < end_date
-        if !d.saturday? || !d.sunday?
-          SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-        end
-      elsif Date.today == end_date # last Dashbasboard falls during the week day
-        if !d.saturday? || !d.sunday?
-          SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-        end
-      elsif d.saturday? # Tue Subscribed => last day is Saturday => email out on Monday
-        if Date.today == @website.date_subscribed + 6.days 
-                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-        end 
-      elsif d.sunday? #wed Subscribed => last day is Sun => email out on Monday
-        if Date.today == @website.date_subscribed + 5.days 
-                SwiftadsMailer.last_dashboard_update(@website.user, @website.name).deliver_now #  dashboard update
-        end 
-      end  
-            
+      total_cost = []
+      @dashboard.data_dashboards.each do|num|
+              if  @website.date_subscribed < num.updated_at
+                  total_cost << num.cost if  @website.date_subscribed < num.updated_at 
+              end 
+      end
+               
+      @cost = 0
+      total_cost.each { |a| @cost +=a } 
+      @remaining_bal = @dashboard.budget - @cost 
+                
+      SwiftadsMailer.dashboard_update_stats(@website.user, @website.name, @dashboard.calls, @dashboard.clicks, @dashboard.searches, @dashboard.cost, @remaining_bal, @dashboard.smartphones, @dashboard.tablets, @dashboard.computers ).deliver_now
+         
   end
 
   # reset the start date for subscription, issues and invoice..

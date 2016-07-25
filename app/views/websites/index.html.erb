@@ -167,10 +167,13 @@
 <% web_id  = website_[0] %>
 <% dash_id = Advertise.find_by(website_id:web_id ) %>
 
-<% web = Website.find(web_id) if web_id.present? %>
-<%= link_to "Your Google Ad", 
-              advertise_path(:id => dash_id), 
-              :class => 'btn btn-default' if current_user.admin.blank?  and dash_id.present? and web.advertising.present? %>
+<% if current_user.websites.length == 1 %>
+
+  <% web = Website.find(web_id) if web_id.present? %>
+  <%= link_to "Your Google Ad", 
+                advertise_path(:id => dash_id), 
+                :class => 'btn btn-default' if current_user.admin.blank?  and dash_id.present? and web.advertising.present? %>
+<% end %>
 
 <%= link_to "Advertise List",
             advertises_path,
@@ -182,10 +185,7 @@
 
 
 <br>
- <p>Please note: for every new Product or Service you add to Google Ads, the fee is $375. <br>$300 is budgeted towards your Google Adwords usage per month. These funds go directly to Google . <br>
-  $75 service fee per month </p>
-<p>
-  <br>
+<br>
   <% content_for :footer do %>
     <% if current_user.admin.blank? %>
         <% count = [] %>
@@ -193,7 +193,8 @@
             <% count.push(website) %>
 
                 <% if website.advertising == true and website.subscribed == false %>
-                <%= count.length %> Your Ad for ""<%= website.name %>"" is Ready to be 
+                -<br>
+                - Your Ad for ""<%= website.name %>"" is Ready to be 
                 Activated <%= link_to "Activate NOW" , website_path(website), class: "link" %>
                 <br>
                 
@@ -207,6 +208,12 @@
                 <%= count.length %>) Within the next 24hrs your Webpage Ad <br> ""<%= website.name %>""<br> will be ready to activate.
                 <% end %>
           <% end %>
+        <br>
+        <br>
+        <p>Please note: for every new Product or Service you add to Google Ads, the fee is $375.
+          $300 is budgeted towards your Google Adwords usage per month. These funds go directly to Google .
+          The $75 represent our service fee per month 
+        </p>
   <% end %>
   <% if current_user.admin.present? %>
       <% count_ads = [] %>

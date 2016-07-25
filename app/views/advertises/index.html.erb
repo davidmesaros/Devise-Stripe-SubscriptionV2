@@ -110,7 +110,9 @@
     <% current_websites.each do|website| %>
         <% count_ads.push(website) if website.advertising == true %>
         <% count_ads_not.push(website) if website.advertising == false %>
-    <% end %> 
+    <% end %>
+    <br>
+    <br> 
     <%= count_ads.length.to_s + " Ads Created "  %>
     <br/>
     <p>--------------------------------------------</p>

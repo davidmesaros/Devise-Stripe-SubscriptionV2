@@ -124,10 +124,23 @@
     <% @website.advertises.each do |website| %>
       <% if @website.advertising.present? && @website.subscribed.blank?%>
       <p>Your Google Ad is ready ACTIVATE NOW!!</p>
-      <%= website.description %>
+      <div class= "stripe_logo">
+                <br>
+                Our Online Secure Payment is powered by Stripe.
+                <br>
+                <br>
+                <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+            </div>
       <% else %> 
       <p>Your Google Ad is NOW LIVE</p>
       <%= website.description %>
+       <div class= "stripe_logo">
+                <br>
+                Our Online Secure Payment is powered by Stripe.
+                <br>
+                <br>
+                <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/" %>
+            </div>
       <% end %>
     <% end %>
 

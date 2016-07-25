@@ -6,36 +6,45 @@
   <body>
     <h4>Hi <%= @user.email %></h4>
     <p>
-      Your Dashboard for the Website URL: "<%=link_to @website, 'https://swiftads.herokuapp.com/websites' %>". has just been updated with the results of today. 
+      Your Dashboard for the Website URL: "<%=link_to @website, 'https://swiftads.herokuapp.com/websites' %>". has just been updated with the results of today. <br>
+      Check Out <a href="https://swiftads.herokuapp.com/data_dashboards">Monthly Results Here</a> . 
       <br>
       <br>
-      Please refer to below Note's when viewing your Dashboard.  You will be notified by email of the next update. In the meantime we will be crunching Data  to optimising your Google Ad for New leads to your Business. 
+      Your Results of Today are listed below.  You will be notified by email of the next update. In the meantime we will be crunching Data to optimising your Google Ad for New leads to your Business. 
     </p> 
       <br>
       <br>
       <h4>Calls:</h4> This number of people who have called you directly from the Google Search Page
       <br>
+      <h3><%= @calls %></h3>
       <br>
       <h4>Clicks: </h4>the number of people that have clicked onto your Google ad and went to webpage for more information
       <br>
+      <h3><%= @clicks %></h3>
       <br>
       <h4>Searches:</h4> How many people have searched for your Key Product/ Service on google
       <br>
+      <h3><%= @searches %></h3>
       <br>
       <h4>Cost: </h4>The Cost of clicks to your Website through your Google Ad.  
       <br>
+      <h3>$<%= @cost %></h3>
       <br>
       <h4>Balance: </h4>This Show the remaining Balance of the $300 that is budgeted towards your Google Advertising
       <br>
+      <h3>$<%= @balance %></h3>
       <br>
       <h4>Smartphone: </h4>The percentage of people using Smartphone to search for key product/service.
       <br>
+      <h3><%= @smartphones %>%</h3>
       <br>
       <h4>Tablets:</h4> The percentage of people using Tablets to search for key product/service.
       <br>
+      <h3><%= @tablets %>%</h3>
       <br>
       <h4>Computer : </h4>The percentage of people using Computer desktops to search for key product/service.
       <br>
+      <h3><%= @computers %>%</h3>
       <br>
     
 

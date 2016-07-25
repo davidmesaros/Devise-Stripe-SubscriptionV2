@@ -78,4 +78,18 @@ class SwiftadsMailer < ApplicationMailer
     @stripeid = stripeid
     mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Trail Period - Swiftads')
   end
+
+  def dashboard_update_stats(user, website, calls, clicks, searches, cost, balance, smartphones, tablets, computers )
+    @user = user
+    @website = website
+    @calls = calls
+    @clicks = clicks
+    @searches = searches
+    @cost = cost
+    @balance = balance
+    @smartphones = smartphones
+    @tablets = tablets
+    @computers = computers
+    mail(to: @user.email, bcc: 'swiftads.au@gmail.com', subject: 'Daily Dashboard Update - Swiftads')
+  end
 end

@@ -29,6 +29,10 @@ function websiteID() {
     alert("DO NOT CHANGE THIS FIELD");
 }
 
+function budgetNotchange() {
+    alert("Only 300 here");
+}
+
  $.getScript('http://www.chartjs.org/assets/Chart.js',function(){
         var ctx = $("#mycanvas").get(0).getContext('2d');
 

@@ -82,11 +82,17 @@
           <div class="well sidebar-nav">
             <h3><%= "Hello Admin" if logged_in? and current_user.admin.present? %></h3>
             <h3>Swiftads : Notes</h3>
-            <%= "Important Notes will be displayed here once you login to Swiftads" if !logged_in? %>
+            
             <%= "Welcome to Swiftads" if logged_in? and current_user.present? %>
             <%= yield :footer %>
-            
-            <ul class="nav nav-list">
+            <div class= "stripe_logo">
+                <br>
+                <%= "Our Online Secure Payment is powered by Stripe." if !logged_in? %> 
+                <br>
+                <br>
+                <%=  link_to image_tag("grey_stripe.png", :alt => "stripe logo"), "https://stripe.com/"  if !logged_in? %>
+            </div>
+                <ul class="nav nav-list">
               <!--<li class="nav-header">Sidebar</li>-->
               <!-- <li><%= link_to "Link1", "/path1"  %></li>
               <li><%= link_to "Link2", "/path2"  %></li>
