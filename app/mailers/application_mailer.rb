@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "swiftads.au@gmail.com"
+  default from: "info@swiftads.com.au"
   layout 'mailer'
 end
