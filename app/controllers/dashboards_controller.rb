@@ -55,7 +55,8 @@ class DashboardsController < ApplicationController
 
       dashboard_data # this from the help controller -> DataDashboard.new => when Dashboard created
       @website = Website.find(@dashboard.website_id)
-      SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now # when dashboard created
+      # SwiftadsMailer.dashboard_update(@website.user, @website.name).deliver_now # when dashboard created
+      mailer_array
     end
   end
 
