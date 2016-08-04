@@ -4,20 +4,24 @@ class DataDashboardsController < ApplicationController
   # GET /data_dashboards
   # GET /data_dashboards.json
   def index
-    
-    @data_dashboards = DataDashboard.where(created_at: 1.month.ago..Time.now) 
-    @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
+
+    if params[:search]
+      search_function
+      
+    else
+      @data_dashboards = DataDashboard.where(created_at: 1.month.ago..Time.now) 
+      @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
 
 
-    total_dashboards # the method is called in the application => cal the total and average 
-    
-    dashboard_data_finder## the method is called in the application 
+      total_dashboards # the method is called in the application => cal the total and average 
+      
+      dashboard_data_finder## the method is called in the application 
+       
+      # @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
+      # will_paginate => needs to be called last Very Important
      
-    # @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
-    # will_paginate => needs to be called last Very Important
-   
-    # bal_bugdet # working to find bal left over from the budget.
-    
+      # bal_bugdet # working to find bal left over from the budget.
+    end
   end
 
   # GET /data_dashboards/1
@@ -84,5 +88,17 @@ class DataDashboardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def data_dashboard_params
       params.require(:data_dashboard).permit(:calls, :clicks, :searches, :cost, :budget, :smartphones, :tablets, :computers, :dashboard_id)
+    end
+
+    def search_function
+      search = params[:search]
+      @data_dashboards = []
+      unless search == ""
+        # Author.column_names[1..-3].each do #the search yadayada
+        @data_dashboards << DataDashboard.where(" dashboard_id LIKE :search", search: "%#{ search }%") # % % means get everything before and get everything after
+        @data_dashboards = @data_dashboards.flatten.uniq
+
+      end
+     
     end
 end
