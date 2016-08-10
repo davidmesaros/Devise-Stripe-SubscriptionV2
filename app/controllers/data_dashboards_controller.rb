@@ -95,7 +95,7 @@ class DataDashboardsController < ApplicationController
       # @data_dashboards = []
       unless search == ""
         # Author.column_names[1..-3].each do #the search yadayada
-        @data_dashboards =  DataDashboard.where(" dashboard_id LIKE :search", search: "#{ search }") # % % means get everything before and get everything after
+        @data_dashboards =  DataDashboard.where(" dashboard_id ILIKE :search", search: "#{ search }") # % % means get everything before and get everything after
         @data_dashboards = @data_dashboards.flatten.uniq
         total_dashboards
       end
