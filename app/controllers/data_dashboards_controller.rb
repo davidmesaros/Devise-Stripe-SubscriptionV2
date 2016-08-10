@@ -10,7 +10,7 @@ class DataDashboardsController < ApplicationController
       
     else
       @data_dashboards = DataDashboard.where(created_at: 1.month.ago..Time.now) 
-      @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present?
+      # @data_dashboards = DataDashboard.paginate(page: params[:page], per_page: 5) if current_user.admin.present? and !params[:search]
 
 
       total_dashboards # the method is called in the application => cal the total and average 
@@ -92,13 +92,13 @@ class DataDashboardsController < ApplicationController
 
     def search_function
       search = params[:search]
-      @data_dashboards = []
+      # @data_dashboards = []
       unless search == ""
         # Author.column_names[1..-3].each do #the search yadayada
-        @data_dashboards << DataDashboard.where(" dashboard_id LIKE :search", search: "%#{ search }%") # % % means get everything before and get everything after
+        @data_dashboards =  DataDashboard.where(" dashboard_id LIKE :search", search: "#{ search }") # % % means get everything before and get everything after
         @data_dashboards = @data_dashboards.flatten.uniq
-
+        total_dashboards
       end
-     
+     # byebug
     end
 end

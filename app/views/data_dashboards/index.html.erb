@@ -1,16 +1,12 @@
 <%- model_class = DataDashboard -%>
 <div class="page-header">
   <h1>Dashboard Monthly </h1>
-  <% if current_user.admin.blank? %>
-    <p> Please note: The Dashboard will only display the last 30 Days Results </p>
-  <% end %>
-</div>
-
-<div align="center">
   
-      <%= will_paginate if current_user.admin.present? %>
-
+    <p> Please note: The Dashboard will only display the last 30 Days Results </p>
+ 
 </div>
+
+
 <% if current_user.admin.blank? %>
 
     <div class = "table-responsive">
@@ -97,7 +93,7 @@
         <tbody>
           <% @data_dashboards.each do |data_dashboard| %>
             <tr>
-              
+             
               <% data_id = data_dashboard.dashboard_id %> <!-- find data_dashbord id -->
               <% dashboard_obj = Dashboard.find_by(id: data_id) %><!-- find the Dashboard id or website Name -->
               <%  web_id = dashboard_obj.website_id %> <!-- get the website ID -->

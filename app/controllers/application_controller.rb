@@ -292,17 +292,21 @@ class ApplicationController < ActionController::Base
   def destroy_data
     list_users = []
       @dashboards.each do |dash|
-        user =  Website.find(dash.website_id)
-          if user.end_date == Date.today + 1.day
-          list_users << user if user.end_date == Date.today
-          end
+      @user =  Website.find(dash.website_id)
+      
+      if @user.end_date == Date.today - 1.day
+      list_users << @user if @user.end_date == Date.today - 1.day
+  end
+        
       end
+
     user_dashboards = []
       list_users.each do |user|
       user_dashboards << user.dashboards
+      
     end
 
-    
+  
       user_dashboards.each do |data_dash|
         data_dash.each do |data|
           data.data_dashboards.destroy_all
