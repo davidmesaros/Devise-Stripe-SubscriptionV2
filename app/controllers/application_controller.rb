@@ -274,7 +274,7 @@ class ApplicationController < ActionController::Base
       SwiftadsMailer.swiftads_invoice_refund(@website.user, @website.name, @website.stripeid, balance).deliver_now
       @website.days_left = 0
       @website.save
-    elsif @website.days_left == 0 && @website.date_subscribed + 1.day == Date.today
+    elsif @website.days_left == 0 && @website.date_subscribed == Date.today
       @website.days_left = ''
       @website.save
     elsif @website.subscribed == false && @website.stripeid.present? # calculate refund if cancelled subscription
