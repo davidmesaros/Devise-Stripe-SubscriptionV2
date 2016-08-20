@@ -21,7 +21,7 @@ class SubscribersController < ApplicationController
         
         
         @@website.stripeid = customer.id
-        @@website.end_date =  Date.today + 1.month
+        @@website.end_date =  Date.today + 1.month - 1.day
         @@website.subscribed = true
         @@website.date_subscribed = Date.today
         @@website.save  

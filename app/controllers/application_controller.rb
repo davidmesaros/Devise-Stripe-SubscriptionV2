@@ -259,7 +259,7 @@ class ApplicationController < ActionController::Base
         
           if end_date == Date.today
             web.date_subscribed = Date.today 
-            web.end_date = 1.month
+            web.end_date = Date.today + 1.month - 1.day
             web.save
             SwiftadsMailer.swiftads_invoice(web.user, web.name, web.stripeid).deliver_now
           end
