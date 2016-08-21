@@ -254,14 +254,14 @@ class ApplicationController < ActionController::Base
   def renew_date 
     @websites.each do |web|
       if web.end_date.present?
-        end_date = web.end_date + 1.day
+        end_date = web.end_date + 1.day # end_date here to find when to start the new subscribtion
         start_date = web.date_subscribed
         
-          if end_date == Date.today
-            web.date_subscribed = Date.today 
-            web.end_date = Date.today + 1.month - 1.day
+          if end_date == Date.today # statement to start the new subscription
+            web.date_subscribed = Date.today # assign a new date_subscribed
+            web.end_date = Date.today + 1.month - 1.day #assign a new end_date
             web.save
-            SwiftadsMailer.swiftads_invoice(web.user, web.name, web.stripeid).deliver_now
+            SwiftadsMailer.swiftads_invoice(web.user, web.name, web.stripeid).deliver_now # new invoice
           end
         end
       end
@@ -270,11 +270,11 @@ class ApplicationController < ActionController::Base
   def refund_account(balance) #=> dashboard#show
      
     @website = Website.find(@dashboard.website_id)
-    if balance > 5 && Date.today == @website.end_date && @website.days_left == nil
+    if balance > 5 && Date.today == @website.end_date && @website.days_left == nil # a statement to confirn end_date
       SwiftadsMailer.swiftads_invoice_refund(@website.user, @website.name, @website.stripeid, balance).deliver_now
-      @website.days_left = 0
+      @website.days_left = 0 #assign switch buttone to 0
       @website.save
-    elsif @website.days_left == 0 && @website.date_subscribed == Date.today
+    elsif @website.days_left == 0 && @website.date_subscribed == Date.today # switch that button off following
       @website.days_left = ''
       @website.save
     elsif @website.subscribed == false && @website.stripeid.present? # calculate refund if cancelled subscription
@@ -292,24 +292,26 @@ class ApplicationController < ActionController::Base
   def destroy_data
     list_users = []
       @dashboards.each do |dash|
-      @user =  Website.find(dash.website_id)
+      @user =  Website.find(dash.website_id) #find website id
       
-      if @user.end_date == Date.today - 1.day
-      list_users << @user if @user.end_date == Date.today - 1.day
-  end
-        
+      if @user.date_subscribed == Date.today 
+      list_users << @user if @user.date_subscribed == Date.today #collect all the websites/users in array
       end
+    end
 
     user_dashboards = []
-      list_users.each do |user|
-      user_dashboards << user.dashboards
+      list_users.each do |user| 
+      user_dashboards << user.dashboards # find the associate dashboard with the website in put them in Array
       
     end
 
-  
-      user_dashboards.each do |data_dash|
-        data_dash.each do |data|
-          data.data_dashboards.destroy_all
+      
+      user_dashboards.each do |data_dash| #now I have array within array
+        data_dash.each do |data| #double loop 
+          if data.data_dashboards.length < 1 #dashboard associate needs to be more then one in there to delete them all
+                                            # this protect new listing from the new subscribtion.
+            data.data_dashboards.destroy_all
+          end
         end
     end
     
