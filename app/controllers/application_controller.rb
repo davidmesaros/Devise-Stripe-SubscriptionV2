@@ -308,7 +308,7 @@ class ApplicationController < ActionController::Base
       
       user_dashboards.each do |data_dash| #now I have array within array
         data_dash.each do |data| #double loop 
-          if data.data_dashboards.length < 1 #dashboard associate needs to be more then one in there to delete them all
+          if data.data_dashboards.length > 1 #dashboard associate needs to be more then one in there to delete them all
                                             # this protect new listing from the new subscribtion.
             data.data_dashboards.destroy_all
           end
