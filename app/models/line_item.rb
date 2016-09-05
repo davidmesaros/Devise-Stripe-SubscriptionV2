@@ -1,5 +1,5 @@
-class LineItem < ActiveRecord::Base
-  include Payday::LineItemable
+# class LineItem < ActiveRecord::Base
+#   include Payday::LineItemable
   
-  belongs_to :invoice
-end
+#   belongs_to :invoice
+# end
