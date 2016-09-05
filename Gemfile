@@ -15,6 +15,8 @@ gem 'bootstrap-will_paginate', '0.0.10'
 
 gem "browser"
 
+gem "payday"
+
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'

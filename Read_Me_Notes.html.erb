@@ -104,4 +104,17 @@
        Next Step is to subscribed to our Monthly Plan and have your Business on the first page of Google when potential users search for your Product or Service. Once your Payment comes through, not only will your advertsiment be on the first page of every search, it will be the first page viewed by potential customers searching on Google. This will make it easy for REAL customers to find your business.
     </p>
 
+
+<!-- 7 days free advertsing worth over $100 on google advertising -->
+        <% if Date.today - @website.created_at.to_date  < 7 %>
+          Thank you for adding your Website url and Your Key Product or Service. Swiftads will now go to work and create an effective online advertisement that will increase your online presence and ranking . We will send through an Email notification in the next 24 hours to let you know that your Google Ad is ready.
+          <br>
+          <br>
+          <% date_joined = @website.created_at %>
+          <% date_count =  date_joined.to_date + 7.days %>
+          <% date_today = Date.today %>
+          <% free_days = (date_count.to_date - date_today.to_date).to_i %>
+          
+          <%= link_to "#{free_days} Days Free Advertising", root_path, class:  'btn btn-primary'%>
+        <% else %>
                         
