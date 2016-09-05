@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829125155) do
+ActiveRecord::Schema.define(version: 20160602061713) do
 
   create_table "advertises", force: :cascade do |t|
     t.text     "description"
@@ -53,21 +53,6 @@ ActiveRecord::Schema.define(version: 20160829125155) do
   end
 
   add_index "data_dashboards", ["dashboard_id"], name: "index_data_dashboards_on_dashboard_id"
-
-  create_table "invoices", force: :cascade do |t|
-    t.string   "bill_to"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "line_items", force: :cascade do |t|
-    t.decimal  "price"
-    t.string   "description"
-    t.integer  "quantity"
-    t.integer  "invoice_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "subscribers", force: :cascade do |t|
     t.datetime "created_at", null: false
