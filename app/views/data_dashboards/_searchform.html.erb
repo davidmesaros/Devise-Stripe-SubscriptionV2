@@ -1,7 +1,7 @@
 
 <div class="form-group" >
   <div class= "col-lg-2">
-    <%= form_tag data_dashboards_path, :remote => true, :method => 'get' do  %>
+    <%= form_tag data_dashboards_path, :method => 'get' do %>
       <p> 
         <%= text_field_tag :search, params[:search], :class => 'form-control' %>
       </p>
