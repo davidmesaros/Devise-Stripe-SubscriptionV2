@@ -70,11 +70,10 @@
 <% else %>
 <!--        ////////////////////// Admin Section ////////////////////////////       -->
 
- 
+  <%= render :partial => 'searchform' %>
     <div class = "table-responsive">
       <table class="table table-striped">
         <thead>
-           <%= render :partial => 'searchform' %>
           <tr>
             <th><%= model_class.human_attribute_name(:id) %></th>
             <th>Conversion</th>
