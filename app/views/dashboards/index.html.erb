@@ -81,7 +81,7 @@
         </div>
 
         
-
+        <div id ='data-dashboard' >
         <%= link_to t('.new', :default => t("helpers.links.new")),
                     new_dashboard_path,
                     :class => 'btn btn-primary' if @website_new.present? %>
@@ -89,9 +89,10 @@
       
         <%= link_to "Home", root_path,
                     :class => 'btn btn-warning' %>
-
+       
         <%= link_to 'Data Dashboard Results',
                   data_dashboards_path, :class => 'btn btn-default'  %>
+        </div>
         <div align="center">
 
           <%= will_paginate %>
@@ -185,3 +186,15 @@
           <% end %>
           
 <% end %>
+
+<script type="text/javascript">
+    //reload page
+
+    $('#data-dashboard').click(function() {
+
+              location.reload();
+              console.log("reload")
+
+    });
+
+</script>
